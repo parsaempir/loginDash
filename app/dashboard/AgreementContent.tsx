@@ -2,11 +2,16 @@
 import Image from "next/image";
 import { useState } from "react";
 
-export default function AgreementContent() {
+interface AgreementContentProps {
+    onNotificationClick?: () => void;
+    onProfileClick?: () => void;
+}
+
+export default function AgreementContent({ onNotificationClick, onProfileClick }: AgreementContentProps) {
     const [activeTab, setActiveTab] = useState("requirements");
 
     return (
-        <div className="flex-1">
+        <div className="flex-1 overflow-y-auto pr-4">
             {/* Top bar with background */}
             <div className="flex items-center justify-between mb-8 relative rounded-2xl overflow-hidden px-6 py-6" style={{
                 backgroundImage: "url('/Frame 2147228857 (1).png')",
@@ -26,7 +31,10 @@ export default function AgreementContent() {
                 </div>
 
                 <div className="flex items-center gap-4 relative z-10">
-                    <button className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA]">
+                    <button
+                        onClick={onProfileClick}
+                        className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA] cursor-pointer"
+                    >
                         <Image
                             src="/right-column.png"
                             alt="User avatar"
@@ -35,7 +43,12 @@ export default function AgreementContent() {
                             className="object-cover"
                         />
                     </button>
-                    <img src='/ellipsis.svg' alt="menu" />
+                    <button
+                        onClick={onNotificationClick}
+                        className="cursor-pointer hover:opacity-70 transition-opacity"
+                    >
+                        <img src='/ellipsis.svg' alt="menu" />
+                    </button>
                 </div>
             </div>
 

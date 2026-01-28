@@ -3,15 +3,33 @@ import Image from "next/image";
 import { useState } from "react";
 import AgreementContent from "./AgreementContent";
 import DeliveryContent from "./DeliveryContent";
+import PaymentContent from "./PaymentContent";
+import ChatContent from "./ChatContent";
+import HelpContent from "./HelpContent";
+import NotificationPanel from "./NotificationPanel";
+import ProfilePanel from "./ProfilePanel";
+import EditProfileModal from "./EditProfileModal";
 
 export default function DashboardPage() {
   // Default to empty state (false = empty, true = has data)
   const [hasData, setHasData] = useState(false);
   // Active page state
   const [activePage, setActivePage] = useState("overview");
+  // Notification/Profile panel states
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+  const [showEditProfile, setShowEditProfile] = useState(false);
+  const [appNotifications, setAppNotifications] = useState(true);
+  const [emailNotifications, setEmailNotifications] = useState(true);
+
+  const handleSaveProfileSettings = (settings: { appNotifications: boolean, emailNotifications: boolean }) => {
+    setAppNotifications(settings.appNotifications);
+    setEmailNotifications(settings.emailNotifications);
+    setShowEditProfile(false);
+  };
 
   return (
-    <div className="min-h-screen bg-[#F5F5F7] flex">
+    <div className="h-screen bg-[#F5F5F7] flex overflow-hidden">
       {/* Left rail */}
       <div className="w-[80px] bg-white flex flex-col items-center py-6 gap-6  my-4 rounded-2xl ml-2">
         <div className="w-10 h-10  flex items-center justify-center text-white text-xl font-semibold">
@@ -72,8 +90,11 @@ export default function DashboardPage() {
           <div className="mt-8 pt-5 border-t border-[#E5E5EA]">
             <div className="text-[15px] text-[black] mb-3">Resources</div>
             <div className="space-y-1 text-[14px] text-[black]">
-              <button className="block w-full text-left hover:text-black flex items-center gap-2 mb-3">
-                <span className="w-1 h-1 rounded-full bg-[#C7C7CC] flex-shrink-0 "></span>
+              <button
+                onClick={() => setActivePage("help")}
+                className={`block w-full text-left hover:text-black flex items-center gap-2 mb-3 ${activePage === "help" ? "text-[#0C6FFF]" : ""}`}
+              >
+                <span className={`w-1 h-1 rounded-full flex-shrink-0 ${activePage === "help" ? "bg-[#0C6FFF]" : "bg-[#C7C7CC]"}`}></span>
                 Get help
               </button>
               <button className="block w-full text-left hover:text-black flex items-center gap-2 mb-3">
@@ -94,13 +115,55 @@ export default function DashboardPage() {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 mr-5 pl-1 py-8">
+      <main className="flex-1 mr-5 pl-1 py-8 flex flex-col min-h-0">
+        {/* Global Panels */}
+        <NotificationPanel
+          show={showNotifications}
+          onClose={() => setShowNotifications(false)}
+        />
+        <ProfilePanel
+          show={showProfile}
+          onClose={() => setShowProfile(false)}
+          onEditClick={() => {
+            setShowProfile(false);
+            setShowEditProfile(true);
+          }}
+        />
+        <EditProfileModal
+          show={showEditProfile}
+          onClose={() => setShowEditProfile(false)}
+          initialAppNotifications={appNotifications}
+          initialEmailNotifications={emailNotifications}
+          onSave={handleSaveProfileSettings}
+        />
+
         {activePage === "agreement" ? (
-          <AgreementContent />
+          <AgreementContent
+            onNotificationClick={() => setShowNotifications(!showNotifications)}
+            onProfileClick={() => setShowProfile(!showProfile)}
+          />
         ) : activePage === "delivery" ? (
-          <DeliveryContent />
+          <DeliveryContent
+            onNotificationClick={() => setShowNotifications(!showNotifications)}
+            onProfileClick={() => setShowProfile(!showProfile)}
+          />
+        ) : activePage === "payment" ? (
+          <PaymentContent
+            onNotificationClick={() => setShowNotifications(!showNotifications)}
+            onProfileClick={() => setShowProfile(!showProfile)}
+          />
+        ) : activePage === "chat" ? (
+          <ChatContent
+            onNotificationClick={() => setShowNotifications(!showNotifications)}
+            onProfileClick={() => setShowProfile(!showProfile)}
+          />
+        ) : activePage === "help" ? (
+          <HelpContent
+            onNotificationClick={() => setShowNotifications(!showNotifications)}
+            onProfileClick={() => setShowProfile(!showProfile)}
+          />
         ) : (
-          <>
+          <div className="flex-1 overflow-y-auto pr-4">
             {/* Top bar */}
             <div className="flex items-center justify-between mb-8 relative rounded-2xl overflow-hidden px-6 py-6" style={{
               backgroundImage: "url('/Frame 2147228857 (1).png')",
@@ -118,7 +181,10 @@ export default function DashboardPage() {
               </div>
 
               <div className="flex items-center gap-4 relative z-10">
-                <button className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA]">
+                <button
+                  onClick={() => setShowProfile(!showProfile)}
+                  className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA] cursor-pointer"
+                >
                   <Image
                     src="/right-column.png"
                     alt="User avatar"
@@ -127,12 +193,17 @@ export default function DashboardPage() {
                     className="object-cover"
                   />
                 </button>
-                <img src='/ellipsis.svg' />
+                <button
+                  onClick={() => setShowNotifications(!showNotifications)}
+                  className="cursor-pointer hover:opacity-70 transition-opacity"
+                >
+                  <img src='/ellipsis.svg' alt="menu" />
+                </button>
               </div>
             </div>
 
             {/* Stats cards */}
-            <section className="grid grid-cols-4 gap-4 mb-10 bg-[#ffffff] rounded-[10] p-5">
+            <section className="grid grid-cols-4 gap-4 mb-10 bg-[#ffffff] rounded-2xl p-5">
               <StatCard
                 tone="success"
                 title="Deliveries approved"
@@ -257,7 +328,7 @@ export default function DashboardPage() {
                 </div>
               </div>
             </section>
-          </>
+          </div>
         )}
       </main>
     </div>

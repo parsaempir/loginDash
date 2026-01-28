@@ -2,7 +2,12 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
-export default function DeliveryContent() {
+interface DeliveryContentProps {
+    onNotificationClick?: () => void;
+    onProfileClick?: () => void;
+}
+
+export default function DeliveryContent({ onNotificationClick, onProfileClick }: DeliveryContentProps) {
     const [hasDeliveries, setHasDeliveries] = useState(false);
     const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
     const [isApprovalModalOpen, setIsApprovalModalOpen] = useState(false);
@@ -30,7 +35,7 @@ export default function DeliveryContent() {
     }, [showSuccessNotification]);
 
     return (
-        <div className="flex-1 relative">
+        <div className="flex-1 overflow-y-auto pr-4">
             {/* Top bar with background */}
             <div className="flex items-center justify-between mb-8 relative rounded-2xl overflow-hidden px-6 py-6" style={{
                 backgroundImage: "url('/Frame 2147228857 (1).png')",
@@ -48,7 +53,10 @@ export default function DeliveryContent() {
                 </div>
 
                 <div className="flex items-center gap-4 relative z-10">
-                    <button className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA]">
+                    <button
+                        onClick={onProfileClick}
+                        className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA] cursor-pointer"
+                    >
                         <Image
                             src="/right-column.png"
                             alt="User avatar"
@@ -57,7 +65,12 @@ export default function DeliveryContent() {
                             className="object-cover"
                         />
                     </button>
-                    <img src='/ellipsis.svg' alt="menu" />
+                    <button
+                        onClick={onNotificationClick}
+                        className="cursor-pointer hover:opacity-70 transition-opacity"
+                    >
+                        <img src='/ellipsis.svg' alt="menu" />
+                    </button>
                 </div>
             </div>
 
@@ -72,8 +85,6 @@ export default function DeliveryContent() {
                         onClick={() => {
                             if (isProjectCompleted) {
                                 setIsProjectFinished(true);
-                                setNotificationMessage("Project marked as completed successfully.");
-                                setShowSuccessNotification(true);
                                 setIsConfirmCompletionModalOpen(true);
                             } else if (!hasDeliveries) {
                                 setHasDeliveries(true);
@@ -106,7 +117,7 @@ export default function DeliveryContent() {
                     <div className="absolute top-[-250px] left-1/2 -translate-x-1/2 z-[80] w-[600px] bg-white border border-[#E5E5EA] rounded-[32px] shadow-2xl p-8 transition-all animate-in fade-in zoom-in duration-300">
                         <h2 className="text-[20px] font-bold text-[#111111] mb-3 text-center">Mark  project as completed?</h2>
                         <p className="text-[14px] text-[#8E8E93] mb-8 text-center leading-relaxed px-4">
-Are you sure you want to Mark project as completed? this<br/> action locks the workspace and cannot be back.
+                            Are you sure you want to Mark project as completed? this<br /> action locks the workspace and cannot be back.
                         </p>
 
                         <div className="flex gap-4">
