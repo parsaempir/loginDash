@@ -5,11 +5,30 @@ import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils"
 
 export default function EditProposalPage() {
     const router = useRouter()
+    const [startDate, setStartDate] = useState("2025/04/02")
+    const [endDate, setEndDate] = useState("2025/04/02")
+    const [currency, setCurrency] = useState("USD")
+    const [pricingModel, setPricingModel] = useState("Fixed")
+    const [note, setNote] = useState("Lorem ipsum volutpat molestie sed sed pulvinar sagittis eget duis mattis ipsum ullamcorper suspendisse purus.")
+
+    const [errors, setErrors] = useState<Record<string, string>>({})
 
     const handleSubmit = () => {
+        const newErrors: Record<string, string> = {}
+        if (!startDate) newErrors.startDate = "Start date is required"
+        if (!currency) newErrors.currency = "Currency is required"
+        if (!pricingModel) newErrors.pricingModel = "Pricing model is required"
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors)
+            return
+        }
+
+        setErrors({})
         router.push("/auth/signup-freelancer/proposal-review/done")
     }
 
@@ -98,14 +117,20 @@ export default function EditProposalPage() {
                                 <div className="space-y-2">
                                     <label className="text-[13px] text-[#86868B] font-medium ml-1">Start Date</label>
                                     <Input
-                                        defaultValue="2025/04/02"
+                                        value={startDate}
+                                        onChange={(e) => {
+                                            setStartDate(e.target.value)
+                                            if (errors.startDate) setErrors({ ...errors, startDate: "" })
+                                        }}
+                                        error={errors.startDate}
                                         className="h-[52px] rounded-xl border-[#C7C7CC] focus:border-[#0C6FFF] focus:ring-0 text-[15px] font-medium"
                                     />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[13px] text-[#86868B] font-medium ml-1">End Date</label>
                                     <Input
-                                        defaultValue="2025/04/02"
+                                        value={endDate}
+                                        onChange={(e) => setEndDate(e.target.value)}
                                         className="h-[52px] rounded-xl border-[#C7C7CC] focus:border-[#0C6FFF] focus:ring-0 text-[15px] font-medium"
                                     />
                                 </div>
@@ -126,25 +151,49 @@ export default function EditProposalPage() {
                                 <div className="space-y-2">
                                     <label className="text-[13px] text-[#86868B] font-medium ml-1">Currency</label>
                                     <div className="relative">
-                                        <select className="w-full h-[52px] rounded-xl border border-[#C7C7CC] focus:border-[#0C6FFF] outline-none text-[15px] font-medium px-4 bg-white appearance-none cursor-pointer">
+                                        <select
+                                            value={currency}
+                                            onChange={(e) => {
+                                                setCurrency(e.target.value)
+                                                if (errors.currency) setErrors({ ...errors, currency: "" })
+                                            }}
+                                            className={cn(
+                                                "w-full h-[52px] rounded-xl border border-[#C7C7CC] focus:border-[#0C6FFF] outline-none text-[15px] font-medium px-4 bg-white appearance-none cursor-pointer",
+                                                errors.currency && "border-red-500"
+                                            )}
+                                        >
+                                            <option value="">Select</option>
                                             <option value="USD">USD</option>
                                             <option value="EUR">EUR</option>
                                         </select>
-                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#86868B]">
+                                        <div className="absolute right-4 top-[26px] -translate-y-1/2 pointer-events-none text-[#86868B]">
                                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                                         </div>
+                                        {errors.currency && <p className="text-[11px] text-red-500 mt-1">{errors.currency}</p>}
                                     </div>
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[13px] text-[#86868B] font-medium ml-1">Pricing Model</label>
                                     <div className="relative">
-                                        <select className="w-full h-[52px] rounded-xl border border-[#C7C7CC] focus:border-[#0C6FFF] outline-none text-[15px] font-medium px-4 bg-white appearance-none cursor-pointer">
-                                            <option value="Monthly">Monthly</option>
+                                        <select
+                                            value={pricingModel}
+                                            onChange={(e) => {
+                                                setPricingModel(e.target.value)
+                                                if (errors.pricingModel) setErrors({ ...errors, pricingModel: "" })
+                                            }}
+                                            className={cn(
+                                                "w-full h-[52px] rounded-xl border border-[#C7C7CC] focus:border-[#0C6FFF] outline-none text-[15px] font-medium px-4 bg-white appearance-none cursor-pointer",
+                                                errors.pricingModel && "border-red-500"
+                                            )}
+                                        >
+                                            <option value="">Select</option>
                                             <option value="Fixed">Fixed Rate</option>
+                                            <option value="Hourly">Hourly Rate</option>
                                         </select>
-                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#86868B]">
+                                        <div className="absolute right-4 top-[26px] -translate-y-1/2 pointer-events-none text-[#86868B]">
                                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                                         </div>
+                                        {errors.pricingModel && <p className="text-[11px] text-red-500 mt-1">{errors.pricingModel}</p>}
                                     </div>
                                 </div>
                             </div>
@@ -155,11 +204,13 @@ export default function EditProposalPage() {
                             <div className="mt-1 md:mt-4 text-[15px] font-medium text-[#1D1D1F] md:w-[22px]">Note</div>
                             <div className="flex-1 w-full">
                                 <textarea
-                                    defaultValue="Lorem ipsum volutpat molestie sed sed pulvinar sagittis eget duis mattis ipsum ullamcorper suspendisse purus."
+                                    value={note}
+                                    onChange={(e) => setNote(e.target.value)}
+                                    placeholder="Add a note to your proposal..."
                                     className="w-full min-h-[120px] p-4 rounded-xl border border-[#C7C7CC] focus:border-[#0C6FFF] outline-none transition-all resize-none text-[15px] font-medium leading-relaxed"
                                 />
                                 <div className="flex justify-end mt-1">
-                                    <span className="text-[10px] text-[#C7C7CC] uppercase tracking-widest font-bold">800</span>
+                                    <span className="text-[10px] text-[#C7C7CC] uppercase tracking-widest font-bold">{note.length} / 800</span>
                                 </div>
                             </div>
                         </div>

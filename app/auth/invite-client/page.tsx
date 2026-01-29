@@ -46,14 +46,9 @@ export default function InviteClientPage() {
                 <div className="mx-auto lg:ml-auto lg:mr-0 w-full max-w-[480px] animate-in fade-in slide-in-from-bottom-4 duration-500 py-10 lg:py-0">
                     {/* Logo Section */}
                     <div className="mb-10 lg:mb-24 flex items-center">
-                        ...
-                        <div className="mb-8 lg:mb-10 space-y-4">
-                            <h1 className="text-[28px] md:text-[32px] font-bold tracking-tight text-[#1D1D1F]">Invite Client</h1>
-                            <p className="text-[14px] md:text-[15px] text-[#86868B] leading-relaxed">
-                                Add your client to Kick-off your project
-                            </p>
-                        </div>
-                        <div className="flex items-center gap-2">
+                     
+                  
+                        <div className="flex items-center gap-2 mb-50">
                             <Image
                                 src="/Vector 16.svg"
                                 alt="Projio Logo"

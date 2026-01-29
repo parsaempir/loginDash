@@ -20,6 +20,19 @@ export default function EditProfileModal({
     const [activeTab, setActiveTab] = useState("account");
     const [appNotifications, setAppNotifications] = useState(initialAppNotifications);
     const [emailNotifications, setEmailNotifications] = useState(initialEmailNotifications);
+    const [currentUser, setCurrentUser] = useState<any>(null);
+
+    // Load user profile from localStorage
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            try {
+                const u = JSON.parse(localStorage.getItem("currentUser") || "null");
+                setCurrentUser(u);
+            } catch (err) {
+                setCurrentUser(null);
+            }
+        }
+    }, []);
 
     // Sync state when modal becomes visible
     useEffect(() => {
@@ -56,15 +69,21 @@ export default function EditProfileModal({
                 </div>
 
                 {/* Avatar Section */}
-                <div className="flex flex-col items-center -mt-12 relative px-8 pb-5">
+                <div className="flex flex-col items-center -mt-14 relative px-8 pb-5">
                     <div className="relative mb-3">
-                        <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg">
-                            <Image
-                                src="/right-column.png"
-                                alt="Mark Bernard"
-                                fill
-                                className="object-cover"
-                            />
+                        <div className="relative w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                            {currentUser?.profileImage ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                    src={currentUser.profileImage}
+                                    alt={currentUser?.name || "User"}
+                                    className="w-full h-full object-contain bg-[#F5F8FF]"
+                                />
+                            ) : (
+                                <div className="w-full h-full bg-[#0C6FFF] flex items-center justify-center text-white font-bold text-4xl">
+                                    {currentUser?.name?.charAt(0)?.toUpperCase() || "U"}
+                                </div>
+                            )}
                         </div>
                         {/* Status Dot */}
                         <div className="absolute top-0 right-0 w-[22px] h-[22px] bg-[#0C6FFF] border-[3px] border-white rounded-full z-20"></div>
@@ -73,8 +92,8 @@ export default function EditProfileModal({
                             <Image src="/Container.svg" alt="edit" width={32} height={32} className="scale-125" />
                         </div>
                     </div>
-                    <h3 className="text-[22px] font-bold text-[#111111]">Mark Bernard</h3>
-                    <p className="text-[14px] text-[#8E8E93]">Markber004@mail.com</p>
+                    <h3 className="text-[22px] font-bold text-[#111111]">{currentUser?.name || "User"}</h3>
+                    <p className="text-[14px] text-[#8E8E93]">{currentUser?.email || "user@example.com"}</p>
                 </div>
 
                 {/* Content Area */}
@@ -111,7 +130,7 @@ export default function EditProfileModal({
                                     <label className="block text-[13px] font-medium text-[#8E8E93] mb-1.5 ml-1">Name</label>
                                     <input
                                         type="text"
-                                        defaultValue="Mark Bernard"
+                                        value={currentUser?.name || ""}
                                         readOnly
                                         className="w-full h-[46px] bg-[#F9F9FB] border border-[#E5E5EA] rounded-[12px] px-4 text-[15px] text-[#8E8E93] cursor-not-allowed focus:outline-none transition-colors"
                                     />
@@ -120,7 +139,7 @@ export default function EditProfileModal({
                                     <label className="block text-[13px] font-medium text-[#8E8E93] mb-1.5 ml-1">Email</label>
                                     <input
                                         type="text"
-                                        defaultValue="mail@example.com"
+                                        value={currentUser?.email || ""}
                                         readOnly
                                         className="w-full h-[46px] bg-[#F9F9FB] border border-[#E5E5EA] rounded-[12px] px-4 text-[15px] text-[#8E8E93] cursor-not-allowed focus:outline-none transition-colors"
                                     />

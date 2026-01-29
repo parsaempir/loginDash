@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ArrowLeft } from "lucide-react"
+import { useUser } from "@/app/context/UserContext"
 
 type AuthStep = "login" | "reset-password" | "verify-code" | "new-password" | "success"
 
@@ -111,9 +112,25 @@ export default function LoginPage() {
 
 function LoginForm({ onForgotPassword }: { onForgotPassword: () => void }) {
     const router = useRouter()
+    const { login } = useUser()
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [errors, setErrors] = useState<{ email?: string; password?: string }>({})
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
+        const newErrors: { email?: string; password?: string } = {}
+
+        if (!email) newErrors.email = "Please enter your email"
+        if (!password) newErrors.password = "Please enter your password"
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors)
+            return
+        }
+
+        setErrors({})
+        login(email)
         router.push("/dashboard")
     }
 
@@ -129,7 +146,12 @@ function LoginForm({ onForgotPassword }: { onForgotPassword: () => void }) {
                     label="Email"
                     placeholder="mail@example.com"
                     type="email"
-                    required
+                    value={email}
+                    onChange={(e) => {
+                        setEmail(e.target.value)
+                        if (errors.email) setErrors({ ...errors, email: undefined })
+                    }}
+                    error={errors.email}
                 />
 
                 <div className="space-y-1">
@@ -137,7 +159,12 @@ function LoginForm({ onForgotPassword }: { onForgotPassword: () => void }) {
                         label="Password"
                         placeholder="Enter your password"
                         type="password"
-                        required
+                        value={password}
+                        onChange={(e) => {
+                            setPassword(e.target.value)
+                            if (errors.password) setErrors({ ...errors, password: undefined })
+                        }}
+                        error={errors.password}
                     />
                 </div>
 
@@ -218,6 +245,18 @@ interface StepProps {
 }
 
 function ResetPasswordForm({ email, setEmail, onVerify }: StepProps) {
+    const [error, setError] = useState("")
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!email) {
+            setError("Please enter your email")
+            return
+        }
+        setError("")
+        onVerify()
+    }
+
     return (
         <div className="animate-in fade-in slide-in-from-right-4 duration-500 py-10 lg:mt-40">
             <div className="mb-8 lg:mb-10 space-y-3">
@@ -227,19 +266,23 @@ function ResetPasswordForm({ email, setEmail, onVerify }: StepProps) {
                 </p>
             </div>
 
-            <form className="space-y-8" onSubmit={(e) => { e.preventDefault(); onVerify(); }}>
+            <form className="space-y-8" onSubmit={handleSubmit}>
                 <div className="space-y-4">
                     <p className="text-sm font-medium text-[#1D1D1F]">Enter your email</p>
                     <Input
                         placeholder="mail@example.com"
                         type="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        error={error}
+                        onChange={(e) => {
+                            setEmail(e.target.value)
+                            if (error) setError("")
+                        }}
                         className="h-[52px]"
                     />
                 </div>
 
-                <Button variant="primary" className="w-full h-[44px] text-base font-semibold px-10">
+                <Button variant="primary" type="submit" className="w-full h-[44px] text-base font-semibold px-10">
                     Get verification code
                 </Button>
             </form>
@@ -407,13 +450,22 @@ function SetNewPasswordForm({ onSuccess }: { onSuccess: () => void }) {
     const [confirmPassword, setConfirmPassword] = useState("")
     const [error, setError] = useState("")
 
-    const handleDone = () => {
+    const handleDone = (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!password) {
+            setError("Password is required")
+            return
+        }
         if (password.length < 8) {
             setError("Password must be at least 8 characters")
             return
         }
+        if (!confirmPassword) {
+            setError("Please confirm your password")
+            return
+        }
         if (password !== confirmPassword) {
-            setError("Passwords not match")
+            setError("Passwords do not match")
             return
         }
         setError("")
@@ -429,14 +481,14 @@ function SetNewPasswordForm({ onSuccess }: { onSuccess: () => void }) {
                 </p>
             </div>
 
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-6" onSubmit={handleDone}>
                 <div className="space-y-2">
                     <Input
                         label="Password"
                         type="password"
                         placeholder="••••••••"
                         value={password}
-                        error={error && error.includes("at least 8 characters") ? error : undefined}
+                        error={error && (error.includes("characters") || error === "Password is required") ? error : undefined}
                         onChange={(e) => {
                             setPassword(e.target.value)
                             if (error) setError("")
@@ -451,7 +503,7 @@ function SetNewPasswordForm({ onSuccess }: { onSuccess: () => void }) {
                         type="password"
                         placeholder="Re-enter your password"
                         value={confirmPassword}
-                        error={error === "Passwords not match" ? "Passwords not match" : undefined}
+                        error={error && (error.includes("match") || error.includes("confirm")) ? error : undefined}
                         onChange={(e) => {
                             setConfirmPassword(e.target.value)
                             if (error) setError("")
@@ -461,8 +513,7 @@ function SetNewPasswordForm({ onSuccess }: { onSuccess: () => void }) {
 
                 <Button
                     variant="primary"
-                    onClick={handleDone}
-                    disabled={!password || !confirmPassword}
+                    type="submit"
                     className="w-full h-11 text-base font-semibold px-10 bg-[#0C6FFF] hover:bg-[#0056D2] text-white disabled:bg-[#E5E9F5] disabled:text-[#A6AFC9]"
                 >
                     Done
@@ -477,10 +528,10 @@ function SuccessScreen() {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            router.push("/dashboard")
+            window.location.href = "/auth/login"
         }, 3000)
         return () => clearTimeout(timer)
-    }, [router])
+    }, [])
 
     return (
         <div className="flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-700 min-h-[500px] lg:min-h-screen w-full px-4 text-center">
@@ -499,7 +550,7 @@ function SuccessScreen() {
                 <h2 className="text-[28px] md:text-[36px] font-bold text-[#1D1D1F] tracking-tight">Done</h2>
             </div>
             <p className="text-[#1D1D1F] text-[14px] md:text-[16px] font-medium opacity-80 max-w-[280px] md:max-w-none">
-                you'll jump into dashboard in a few seconds
+                you'll jump into sign in page in a few seconds
             </p>
         </div>
     )

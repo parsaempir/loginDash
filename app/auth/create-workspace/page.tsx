@@ -7,30 +7,46 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Info } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 export default function CreateWorkspacePage() {
     const router = useRouter()
-    const [profileImage, setProfileImage] = useState<string | null>(null)
+    const [workspaceLogo, setWorkspaceLogo] = useState<string | null>(null)
     const fileInputRef = useRef<HTMLInputElement>(null)
-
-    useEffect(() => {
-        const savedImage = localStorage.getItem("userProfileImage")
-        if (savedImage) {
-            setProfileImage(savedImage)
-        }
-    }, [])
+    const [workspaceName, setWorkspaceName] = useState("")
+    const [error, setError] = useState("")
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
         if (file) {
-            const imageUrl = URL.createObjectURL(file)
-            setProfileImage(imageUrl)
-            localStorage.setItem("userProfileImage", imageUrl)
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setWorkspaceLogo(reader.result as string);
+                if (error === "Workspace logo is required") setError("");
+            };
+            reader.readAsDataURL(file);
         }
     }
 
     const handleCircleClick = () => {
         fileInputRef.current?.click()
+    }
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!workspaceLogo) {
+            setError("Workspace logo is required")
+            return
+        }
+        if (!workspaceName) {
+            setError("Workspace name is required")
+            return
+        }
+        setError("")
+
+        // Optionally save to localStorage specifically for workspace
+        localStorage.setItem("currentWorkspaceLogo", workspaceLogo);
+        router.push("/auth/invite-client")
     }
 
     return (
@@ -72,14 +88,17 @@ export default function CreateWorkspacePage() {
                             />
                             <div
                                 onClick={handleCircleClick}
-                                className="h-[100px] w-[100px] md:h-[128px] md:w-[128px] rounded-full bg-[#F5F8FF] flex items-center justify-center cursor-pointer hover:bg-[#EEF3FF] transition-all overflow-hidden border-none group relative"
+                                className={cn(
+                                    "h-[100px] w-[100px] md:h-[128px] md:w-[128px] rounded-full bg-[#F5F8FF] flex items-center justify-center cursor-pointer hover:bg-[#EEF3FF] transition-all overflow-hidden border-2 group relative",
+                                    error === "Workspace logo is required" ? "border-red-500" : "border-transparent"
+                                )}
                             >
-                                {profileImage ? (
+                                {workspaceLogo ? (
                                     <Image
-                                        src={profileImage}
+                                        src={workspaceLogo}
                                         alt="Workspace Logo"
                                         fill
-                                        className="object-cover"
+                                        className="object-contain"
                                     />
                                 ) : (
                                     <div className="relative w-10 h-10 transition-transform group-hover:scale-110">
@@ -93,16 +112,27 @@ export default function CreateWorkspacePage() {
                                 )}
                             </div>
                         </div>
-                        <div className="flex items-center gap-2 opacity-60">
-                            <Info size={14} className="text-[#86868B]" />
-                            <p className="text-[11px] text-[#86868B]">Upload your workspace logo or image</p>
+                        <div className="flex flex-col items-center gap-2">
+                            <div className="flex items-center gap-2 opacity-60">
+                                <Info size={14} className="text-[#86868B]" />
+                                <p className="text-[11px] text-[#86868B]">Upload your workspace logo or image</p>
+                            </div>
+                            {error === "Workspace logo is required" && (
+                                <p className="text-xs text-red-500 mt-1">{error}</p>
+                            )}
                         </div>
                     </div>
 
-                    <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); router.push("/auth/invite-client"); }}>
+                    <form className="space-y-6" onSubmit={handleSubmit}>
                         <div className="space-y-2">
                             <p className="text-[13px] font-medium text-[#1D1D1F]">Workspace Name<span className="text-[#EB4335]">*</span></p>
                             <Input
+                                value={workspaceName}
+                                onChange={(e) => {
+                                    setWorkspaceName(e.target.value)
+                                    if (error) setError("")
+                                }}
+                                error={error}
                                 placeholder="e.g. Design Studio, Team Nova"
                                 className="h-11 border-[#E5E5E5] focus:border-[#0C6FFF] rounded-xl"
                             />

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AgreementContent from "./AgreementContent";
 import DeliveryContent from "./DeliveryContent";
 import PaymentContent from "./PaymentContent";
@@ -9,10 +9,12 @@ import HelpContent from "./HelpContent";
 import NotificationPanel from "./NotificationPanel";
 import ProfilePanel from "./ProfilePanel";
 import EditProfileModal from "./EditProfileModal";
+import { useUser } from "@/app/context/UserContext";
 
 export default function DashboardPage() {
-  // Default to empty state (false = empty, true = has data)
-  const [hasData, setHasData] = useState(false);
+  const { currentUser } = useUser();
+  // Default to has data for demonstration (true = has data, false = empty)
+  const [hasData, setHasData] = useState(true);
   // Active page state
   const [activePage, setActivePage] = useState("overview");
   // Notification/Profile panel states
@@ -75,14 +77,16 @@ export default function DashboardPage() {
       `}>
         <div>
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-[8] bg-[#FFAE00] flex items-center justify-center font-semibold text-sm">
-              R
+            <div className="w-10 h-10 rounded-[8] bg-[#FFAE00] flex items-center justify-center font-semibold text-sm flex-shrink-0 text-white">
+              {(currentUser?.name || "U").charAt(0).toUpperCase()}
             </div>
             <div className="flex flex-col">
               <span className="text-[16px] font-[500] text-[#303030] leading-none">
-                Rode wing
+                {currentUser?.name || "User"}
               </span>
-
+              <span className="text-[12px] text-[#8E8E93]">
+                {currentUser?.email || ""}
+              </span>
             </div>
           </div>
 
@@ -216,15 +220,16 @@ export default function DashboardPage() {
                 <div className="relative">
                   <button
                     onClick={() => setShowProfile(!showProfile)}
-                    className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA] cursor-pointer"
+                    className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA] cursor-pointer bg-[#F5F8FF] flex items-center justify-center"
                   >
-                    <Image
-                      src="/right-column.png"
-                      alt="User avatar"
-                      fill
-                      sizes="36px"
-                      className="object-cover"
-                    />
+                    {currentUser?.profileImage ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={currentUser.profileImage} alt={currentUser?.name || "User"} className="w-full h-full object-contain bg-[#F5F8FF]" />
+                    ) : (
+                      <div className="w-9 h-9 rounded-full bg-[#0C6FFF] flex items-center justify-center text-white font-semibold text-sm">
+                        {currentUser?.name?.charAt(0)?.toUpperCase() || "U"}
+                      </div>
+                    )}
                   </button>
                   <div className="absolute top-0 right-0 w-[11px] h-[11px] bg-[#0C6FFF] border-2 border-white rounded-full z-20"></div>
                 </div>

@@ -235,7 +235,7 @@ export default function ClientReviewProposalPage() {
                         <div className="flex flex-col-reverse md:flex-row items-center gap-6 md:justify-between">
                             <button
                                 onClick={() => setShowAcceptModal(false)}
-                                className="text-[16px] md:text-[18px] font-bold text-[#1D1D1F] hover:opacity-70 transition-opacity"
+                                className="text-[16px] md:text-[18px] md:w-[280px] font-bold text-[#1D1D1F] hover:opacity-70 transition-opacity"
                             >
                                 Back
                             </button>

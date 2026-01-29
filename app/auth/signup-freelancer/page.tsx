@@ -7,13 +7,17 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ArrowLeft, Info, Eye, EyeOff } from "lucide-react"
+import { useUser } from "@/app/context/UserContext"
+import { cn } from "@/lib/utils"
 
 type SignupStep = "signup" | "verify" | "info" | "photo"
 
 export default function FreelancerSignupPage() {
     const [step, setStep] = useState<SignupStep>("signup")
     const [email, setEmail] = useState("mail@example.com")
+    const [userName, setUserName] = useState("")
     const router = useRouter()
+    const { updateUser } = useUser()
 
     return (
         <div className="flex min-h-screen lg:h-screen bg-white overflow-y-auto lg:overflow-hidden">
@@ -66,10 +70,19 @@ export default function FreelancerSignupPage() {
                             />
                         )}
                         {step === "info" && (
-                            <InfoStepForm onNext={() => setStep("photo")} />
+                            <InfoStepForm email={email} onNext={(name: string) => {
+                                setUserName(name);
+                                setStep("photo");
+                            }} />
                         )}
                         {step === "photo" && (
-                            <AlmostThereStepForm onNext={() => router.push("/auth/create-workspace")} />
+                            <AlmostThereStepForm
+                                email={email}
+                                userName={userName}
+                                onNext={(profileImage: string) => {
+                                    updateUser({ email, name: userName, profileImage });
+                                    router.push("/auth/create-workspace");
+                                }} />
                         )}
                     </div>
                 </div>
@@ -92,7 +105,28 @@ export default function FreelancerSignupPage() {
 }
 
 function SignupForm({ email, setEmail, onContinue }: { email: string; setEmail: (e: string) => void; onContinue: () => void }) {
+    const [password, setPassword] = useState("")
+    const [agreed, setAgreed] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
+    const [errors, setErrors] = useState<{ email?: string; password?: string; agreed?: string }>({})
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        const newErrors: { email?: string; password?: string; agreed?: string } = {}
+
+        if (!email) newErrors.email = "Email is required"
+        if (!password) newErrors.password = "Password is required"
+        else if (password.length < 8) newErrors.password = "Password must be at least 8 characters"
+        if (!agreed) newErrors.agreed = "You must agree to the terms"
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors)
+            return
+        }
+
+        setErrors({})
+        onContinue()
+    }
 
     return (
         <div className="animate-in fade-in slide-in-from-left-4 duration-500">
@@ -103,14 +137,18 @@ function SignupForm({ email, setEmail, onContinue }: { email: string; setEmail: 
                 <p className="text-[13px] md:text-[15px] text-[#86868B]">Please enter your email address to create an account.</p>
             </div>
 
-            <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); onContinue(); }}>
+            <form className="space-y-5" onSubmit={handleSubmit}>
                 <div className="space-y-2">
                     <p className="text-[13px] font-normal text-[#1D1D1F]">Email</p>
                     <Input
                         placeholder="mail@example.com"
                         type="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => {
+                            setEmail(e.target.value)
+                            if (errors.email) setErrors({ ...errors, email: undefined })
+                        }}
+                        error={errors.email}
                     />
                 </div>
 
@@ -119,12 +157,18 @@ function SignupForm({ email, setEmail, onContinue }: { email: string; setEmail: 
                     <Input
                         placeholder="Enter your password"
                         type={showPassword ? "text" : "password"}
+                        value={password}
+                        onChange={(e) => {
+                            setPassword(e.target.value)
+                            if (errors.password) setErrors({ ...errors, password: undefined })
+                        }}
+                        error={errors.password}
                         className="pr-12"
                     />
                     <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 bottom-[11px] text-[#86868B] hover:text-[#1D1D1F] transition-colors cursor-pointer"
+                        className={`absolute right-3 ${errors.password ? "bottom-[35px]" : "bottom-[11px]"} text-[#86868B] hover:text-[#1D1D1F] transition-colors cursor-pointer`}
                     >
                         {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
                     </button>
@@ -134,10 +178,19 @@ function SignupForm({ email, setEmail, onContinue }: { email: string; setEmail: 
                     */}
                 </div>
 
-                <div className="flex items-center gap-2 py-2">
+                <div className="flex flex-col gap-2 py-2">
                     <label className="flex items-center gap-2 cursor-pointer select-none">
                         <div className="relative h-5 w-5 flex items-center justify-center">
-                            <input type="checkbox" className="sr-only peer" id="agreement" />
+                            <input
+                                type="checkbox"
+                                className="sr-only peer"
+                                id="agreement"
+                                checked={agreed}
+                                onChange={(e) => {
+                                    setAgreed(e.target.checked)
+                                    if (errors.agreed) setErrors({ ...errors, agreed: undefined })
+                                }}
+                            />
                             <div className="absolute inset-0 rounded border border-[#D2D2D7] bg-white transition-all peer-checked:bg-[#1D61F2] peer-checked:border-[#1D61F2] hover:border-[#1D61F2]" />
                             <svg
                                 className="relative h-3.5 w-3.5 text-white opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none"
@@ -155,6 +208,7 @@ function SignupForm({ email, setEmail, onContinue }: { email: string; setEmail: 
                             <Link href="#" className="text-[#0C6FFF] hover:underline cursor-pointer">Privacy Policy</Link>
                         </span>
                     </label>
+                    {errors.agreed && <p className="text-xs text-red-500">{errors.agreed}</p>}
                 </div>
 
                 <Button variant="primary" type="submit" className="w-full text-base h-11 bg-[#0C6FFF] hover:bg-[#0056D2]">
@@ -277,7 +331,27 @@ function SignupVerificationForm({ email, onSuccess }: { email: string; onSuccess
     )
 }
 
-function InfoStepForm({ onNext }: { onNext: () => void }) {
+function InfoStepForm({ email, onNext }: { email: string; onNext: (name: string) => void }) {
+    const [fullName, setFullName] = useState("");
+    const [role, setRole] = useState("");
+    const [errors, setErrors] = useState<{ fullName?: string; role?: string }>({})
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const newErrors: { fullName?: string; role?: string } = {}
+
+        if (!fullName) newErrors.fullName = "Full name is required"
+        if (!role) newErrors.role = "Title / Role is required"
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors)
+            return
+        }
+
+        setErrors({})
+        onNext(fullName);
+    }
+
     return (
         <div className="animate-in fade-in slide-in-from-right-4 duration-500">
             {/* Stepper */}
@@ -301,20 +375,32 @@ function InfoStepForm({ onNext }: { onNext: () => void }) {
                 </p>
             </div>
 
-            <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); onNext(); }}>
+            <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="space-y-2">
                     <p className="text-[13px] font-medium text-[#1D1D1F]">Full name<span className="text-[#EB4335]">*</span></p>
                     <Input
+                        value={fullName}
+                        onChange={(e) => {
+                            setFullName(e.target.value)
+                            if (errors.fullName) setErrors({ ...errors, fullName: undefined })
+                        }}
                         placeholder="e.g: Emma Watson"
                         className="h-11 border-[#E5E5E5] focus:border-[#0C6FFF] rounded-xl"
+                        error={errors.fullName}
                     />
                 </div>
 
                 <div className="space-y-2">
                     <p className="text-[13px] font-medium text-[#1D1D1F]">Title / Role<span className="text-[#EB4335]">*</span></p>
                     <Input
+                        value={role}
+                        onChange={(e) => {
+                            setRole(e.target.value)
+                            if (errors.role) setErrors({ ...errors, role: undefined })
+                        }}
                         placeholder="e.g: Front-end Developer"
                         className="h-11 border-[#E5E5E5] focus:border-[#0C6FFF] rounded-xl"
+                        error={errors.role}
                     />
                 </div>
 
@@ -328,20 +414,35 @@ function InfoStepForm({ onNext }: { onNext: () => void }) {
 
 import { useRef } from "react"
 
-function AlmostThereStepForm({ onNext }: { onNext: () => void }) {
+function AlmostThereStepForm({ email, userName, onNext }: { email: string; userName: string; onNext: (profileImage: string) => void }) {
     const fileInputRef = useRef<HTMLInputElement>(null)
     const [selectedImage, setSelectedImage] = useState<string | null>(null)
+    const [error, setError] = useState("")
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
         if (file) {
-            const imageUrl = URL.createObjectURL(file)
-            setSelectedImage(imageUrl)
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setSelectedImage(reader.result as string);
+                if (error) setError("");
+            };
+            reader.readAsDataURL(file);
         }
     }
 
     const handleCircleClick = () => {
         fileInputRef.current?.click()
+    }
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!selectedImage) {
+            setError("Profile image is required")
+            return
+        }
+        setError("")
+        onNext(selectedImage);
     }
 
     return (
@@ -378,14 +479,17 @@ function AlmostThereStepForm({ onNext }: { onNext: () => void }) {
                     />
                     <div
                         onClick={handleCircleClick}
-                        className="h-[100px] w-[100px] md:h-[128px] md:w-[128px] rounded-full bg-[#F5F8FF] flex items-center justify-center cursor-pointer hover:bg-[#EEF3FF] transition-all overflow-hidden border-none group relative"
+                        className={cn(
+                            "h-[100px] w-[100px] md:h-[128px] md:w-[128px] rounded-full bg-[#F5F8FF] flex items-center justify-center cursor-pointer hover:bg-[#EEF3FF] transition-all overflow-hidden border-2 group relative",
+                            error ? "border-red-500" : "border-transparent"
+                        )}
                     >
                         {selectedImage ? (
                             <Image
                                 src={selectedImage}
                                 alt="Profile Preview"
                                 fill
-                                className="object-cover"
+                                className="object-contain"
                             />
                         ) : (
                             <div className="relative w-8 h-8 md:w-10 md:h-10 transition-transform group-hover:scale-110">
@@ -400,6 +504,7 @@ function AlmostThereStepForm({ onNext }: { onNext: () => void }) {
                     </div>
                 </div>
                 <span className="text-[18px] md:text-[20px] font-semibold text-[#1D1D1F]">You</span>
+                {error && <p className="text-xs text-red-500 mt-2">{error}</p>}
             </div>
 
             <div className="flex items-center gap-2 mb-8 md:mb-12 justify-center opacity-70">
@@ -409,13 +514,9 @@ function AlmostThereStepForm({ onNext }: { onNext: () => void }) {
                 <p className="text-[10px] md:text-[11px] text-[#86868B]">Upload a picture you want to set as your profile.</p>
             </div>
 
-            <form onSubmit={(e) => {
-                e.preventDefault();
-                if (selectedImage) {
-                    localStorage.setItem("userProfileImage", selectedImage);
-                }
-                onNext();
-            }}>
+            <form onSubmit={handleSubmit}>
+                <div className="space-y-4">
+                </div>
                 <Button variant="primary" type="submit" className="w-full text-base h-[52px] bg-[#0C6FFF] hover:bg-[#0056D2] rounded-xl shadow-none font-semibold">
                     Confirm
                 </Button>

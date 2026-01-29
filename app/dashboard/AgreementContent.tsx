@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface AgreementContentProps {
     onNotificationClick?: () => void;
@@ -9,6 +9,18 @@ interface AgreementContentProps {
 
 export default function AgreementContent({ onNotificationClick, onProfileClick }: AgreementContentProps) {
     const [activeTab, setActiveTab] = useState("requirements");
+    const [currentUser, setCurrentUser] = useState<any>(null);
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            try {
+                const u = JSON.parse(localStorage.getItem("currentUser") || "null");
+                setCurrentUser(u);
+            } catch (err) {
+                setCurrentUser(null);
+            }
+        }
+    }, []);
 
     return (
         <div className="flex-1 overflow-y-auto px-4 lg:px-0 lg:pr-4 pt-8">
@@ -36,15 +48,20 @@ export default function AgreementContent({ onNotificationClick, onProfileClick }
                     <div className="relative">
                         <button
                             onClick={onProfileClick}
-                            className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA] cursor-pointer"
+                            className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA] cursor-pointer bg-[#F5F8FF] flex items-center justify-center"
                         >
-                            <Image
-                                src="/right-column.png"
-                                alt="User avatar"
-                                fill
-                                sizes="36px"
-                                className="object-cover"
-                            />
+                            {currentUser?.profileImage ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                    src={currentUser.profileImage}
+                                    alt={currentUser?.name || "User"}
+                                    className="w-full h-full object-contain bg-[#F5F8FF]"
+                                />
+                            ) : (
+                                <div className="w-9 h-9 rounded-full bg-[#0C6FFF] flex items-center justify-center text-white font-semibold text-sm">
+                                    {currentUser?.name?.charAt(0)?.toUpperCase() || "U"}
+                                </div>
+                            )}
                         </button>
                         <div className="absolute top-0 right-0 w-[11px] h-[11px] bg-[#0C6FFF] border-2 border-white rounded-full z-20"></div>
                     </div>

@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils"
 
 export default function SetProposalPage() {
     const router = useRouter()
@@ -13,6 +14,17 @@ export default function SetProposalPage() {
     const [isSubmitted, setIsSubmitted] = useState(false)
     const [showNotification, setShowNotification] = useState(false)
     const [status, setStatus] = useState<'waiting' | 'changes' | 'message'>('waiting')
+
+    // Form State
+    const [startDate, setStartDate] = useState("")
+    const [endDate, setEndDate] = useState("")
+    const [currency, setCurrency] = useState("")
+    const [pricingModel, setPricingModel] = useState("")
+    const [fullName, setFullName] = useState("")
+    const [note, setNote] = useState("")
+
+    // Error State
+    const [errors, setErrors] = useState<Record<string, string>>({})
 
     // Auto-dismiss notification after 10 seconds
     useEffect(() => {
@@ -35,6 +47,23 @@ export default function SetProposalPage() {
     }, [isSubmitted, status])
 
     const nextStep = () => {
+        const newErrors: Record<string, string> = {}
+
+        if (subStep === 1) {
+            if (!startDate) newErrors.startDate = "Start date is required"
+        } else if (subStep === 2) {
+            if (!currency) newErrors.currency = "Currency is required"
+            if (!pricingModel) newErrors.pricingModel = "Pricing model is required"
+        } else if (subStep === 3) {
+            if (!fullName) newErrors.fullName = "Full name is required"
+        }
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors)
+            return
+        }
+
+        setErrors({})
         if (subStep < 3) {
             setSubStep(subStep + 1)
         } else {
@@ -133,6 +162,12 @@ export default function SetProposalPage() {
                                 </label>
                                 <div className="relative group">
                                     <Input
+                                        value={startDate}
+                                        onChange={(e) => {
+                                            setStartDate(e.target.value)
+                                            if (errors.startDate) setErrors({ ...errors, startDate: "" })
+                                        }}
+                                        error={errors.startDate}
                                         placeholder="MM/DD/YY"
                                         className="h-[52px] rounded-xl border-[#686868] focus:border-[#0C6FFF] focus:ring-0 text-[15px] placeholder:text-[#C7C7CC] transition-all"
                                     />
@@ -144,6 +179,8 @@ export default function SetProposalPage() {
                                 </label>
                                 <div className="relative group">
                                     <Input
+                                        value={endDate}
+                                        onChange={(e) => setEndDate(e.target.value)}
                                         placeholder="MM/DD/YY"
                                         className="h-[52px] rounded-xl border-[#686868] focus:border-[#0C6FFF] focus:ring-0 text-[15px] placeholder:text-[#C7C7CC] transition-all"
                                     />
@@ -160,14 +197,25 @@ export default function SetProposalPage() {
                                     Currency<span className="text-[#EB4335] ml-0.5">*</span>
                                 </label>
                                 <div className="relative">
-                                    <select className="w-full h-[52px] rounded-xl border border-[#686868] focus:border-[#0C6FFF] outline-none text-[15px] px-4 bg-white appearance-none cursor-pointer">
+                                    <select
+                                        value={currency}
+                                        onChange={(e) => {
+                                            setCurrency(e.target.value)
+                                            if (errors.currency) setErrors({ ...errors, currency: "" })
+                                        }}
+                                        className={cn(
+                                            "w-full h-[52px] rounded-xl border border-[#686868] focus:border-[#0C6FFF] outline-none text-[15px] px-4 bg-white appearance-none cursor-pointer",
+                                            errors.currency && "border-red-500"
+                                        )}
+                                    >
                                         <option value="">Select</option>
                                         <option value="USD">USD</option>
                                         <option value="EUR">EUR</option>
                                     </select>
-                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#86868B]">
+                                    <div className="absolute right-4 top-[26px] -translate-y-1/2 pointer-events-none text-[#86868B]">
                                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                                     </div>
+                                    {errors.currency && <p className="text-[11px] text-red-500 mt-1">{errors.currency}</p>}
                                 </div>
                             </div>
                             <div className="space-y-3">
@@ -175,14 +223,25 @@ export default function SetProposalPage() {
                                     Pricing Model<span className="text-[#EB4335] ml-0.5">*</span>
                                 </label>
                                 <div className="relative">
-                                    <select className="w-full h-[52px] rounded-xl border border-[#686868] focus:border-[#0C6FFF] outline-none text-[15px] px-4 bg-white appearance-none cursor-pointer">
+                                    <select
+                                        value={pricingModel}
+                                        onChange={(e) => {
+                                            setPricingModel(e.target.value)
+                                            if (errors.pricingModel) setErrors({ ...errors, pricingModel: "" })
+                                        }}
+                                        className={cn(
+                                            "w-full h-[52px] rounded-xl border border-[#686868] focus:border-[#0C6FFF] outline-none text-[15px] px-4 bg-white appearance-none cursor-pointer",
+                                            errors.pricingModel && "border-red-500"
+                                        )}
+                                    >
                                         <option value="">Select</option>
                                         <option value="Fixed">Fixed Rate</option>
                                         <option value="Hourly">Hourly Rate</option>
                                     </select>
-                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#86868B]">
+                                    <div className="absolute right-4 top-[26px] -translate-y-1/2 pointer-events-none text-[#86868B]">
                                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                                     </div>
+                                    {errors.pricingModel && <p className="text-[11px] text-red-500 mt-1">{errors.pricingModel}</p>}
                                 </div>
                             </div>
                         </div>
@@ -196,6 +255,12 @@ export default function SetProposalPage() {
                                     Enter your full name<span className="text-[#EB4335] ml-0.5">*</span>
                                 </label>
                                 <Input
+                                    value={fullName}
+                                    onChange={(e) => {
+                                        setFullName(e.target.value)
+                                        if (errors.fullName) setErrors({ ...errors, fullName: "" })
+                                    }}
+                                    error={errors.fullName}
                                     placeholder="e.g: Alex Miller"
                                     className="h-[52px] rounded-xl border-[#686868] focus:border-[#0C6FFF] focus:ring-0 text-[15px] placeholder:text-[#C7C7CC] transition-all"
                                 />
@@ -208,6 +273,8 @@ export default function SetProposalPage() {
                                     <span className="text-[13px] text-[#86868B] font-normal">(optional)</span>
                                 </div>
                                 <textarea
+                                    value={note}
+                                    onChange={(e) => setNote(e.target.value)}
                                     placeholder="A short note about what this workspace is for"
                                     className="w-full min-h-[120px] p-4 rounded-xl border border-[#686868] focus:border-[#0C6FFF] outline-none transition-all resize-none text-[15px] placeholder:text-[#C7C7CC]"
                                 />
