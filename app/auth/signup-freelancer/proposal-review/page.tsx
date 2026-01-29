@@ -39,7 +39,7 @@ export default function ProposalReviewPage() {
             )}
 
             {/* Branded Header */}
-            <div className="w-full h-[140px] relative flex items-center px-12 overflow-hidden bg-[#FBFBFB]">
+            <div className="w-full h-[100px] md:h-[140px] relative flex items-center px-6 md:px-12 overflow-hidden bg-[#FBFBFB]">
                 <Image
                     src="/Frame 2147228857.png"
                     alt="Background Pattern"
@@ -59,7 +59,7 @@ export default function ProposalReviewPage() {
             </div>
 
             {/* Progress Stepper */}
-            <div className="flex items-center justify-center gap-8 mt-12 mb-16 px-6">
+            <div className="flex items-center justify-center gap-4 md:gap-8 mt-12 mb-16 px-6">
                 <div className="flex flex-col items-center gap-2 relative">
                     <div className="h-9 w-9 rounded-full bg-[#F2F2F2] flex items-center justify-center text-[15px] font-medium text-[#1D1D1F]">
                         1
@@ -75,11 +75,11 @@ export default function ProposalReviewPage() {
             </div>
 
             {/* Content Area */}
-            <div className="w-full max-w-[1000px] px-8 pb-24 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            <div className="w-full max-w-[1000px] px-6 md:px-8 pb-24 animate-in fade-in slide-in-from-bottom-2 duration-500">
                 <div className="space-y-12">
                     {/* Page Header */}
                     <div className="space-y-4">
-                        <h1 className="text-[32px] font-bold tracking-tight text-[#1D1D1F]">Review Project Requierements</h1>
+                        <h1 className="text-[28px] md:text-[32px] font-bold tracking-tight text-[#1D1D1F]">Review Project Requirements</h1>
                         <p className="text-[15px] text-[#424245] leading-relaxed max-w-[440px]">
                             The freelancer sent a proposal for this project.<br />
                             Review the details below and choose an action.
@@ -138,7 +138,7 @@ export default function ProposalReviewPage() {
                         <Button
                             variant="primary"
                             onClick={() => router.push("/auth/signup-freelancer/proposal-review/review")}
-                            className="w-[200px] h-[48px] text-[16px] font-semibold bg-[#0C6FFF] hover:bg-[#0056D2] rounded-xl shadow-none transition-all"
+                            className="w-full md:w-[200px] h-[48px] text-[16px] font-semibold bg-[#0C6FFF] hover:bg-[#0056D2] rounded-xl shadow-none transition-all"
                         >
                             Next
                         </Button>

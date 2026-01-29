@@ -21,6 +21,7 @@ export default function DashboardPage() {
   const [showEditProfile, setShowEditProfile] = useState(false);
   const [appNotifications, setAppNotifications] = useState(true);
   const [emailNotifications, setEmailNotifications] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleSaveProfileSettings = (settings: { appNotifications: boolean, emailNotifications: boolean }) => {
     setAppNotifications(settings.appNotifications);
@@ -30,9 +31,35 @@ export default function DashboardPage() {
 
   return (
     <div className="h-screen bg-[#F5F5F7] flex overflow-hidden">
+      {/* Mobile Header */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-[#E5E5EA] flex items-center justify-between px-4 z-[40]">
+        <div className="flex items-center gap-2">
+          <img src='/Vector 16.svg' className="h-6 w-6" />
+          <span className="text-lg font-bold text-[#1D1D1F]">Projio</span>
+        </div>
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="p-2 hover:bg-[#F5F5F7] rounded-lg transition-colors"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1D1D1F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      {/* Sidebar Overlay for Mobile */}
+      {sidebarOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[45] animate-in fade-in duration-300"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Left rail */}
-      <div className="w-[80px] bg-white flex flex-col items-center py-6 gap-6  my-4 rounded-2xl ml-2">
-        <div className="w-10 h-10  flex items-center justify-center text-white text-xl font-semibold">
+      <div className="hidden lg:flex w-[80px] bg-white flex-col items-center py-6 gap-6 my-4 rounded-2xl ml-2">
+        <div className="w-10 h-10 flex items-center justify-center text-white text-xl font-semibold">
           <img src='/Vector 16.svg' />
         </div>
         <div className="flex-1" />
@@ -40,7 +67,12 @@ export default function DashboardPage() {
       </div>
 
       {/* Sidebar */}
-      <aside className="w-[260px] bg-white  flex flex-col justify-between py-6 px-6  my-4 rounded-2xl mx-2">
+      <aside className={`
+        fixed lg:static inset-y-0 left-0 z-[50]
+        w-[260px] bg-white flex flex-col justify-between py-6 px-6 lg:my-4 rounded-r-2xl lg:rounded-2xl lg:mx-2
+        transition-transform duration-300 ease-in-out
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+      `}>
         <div>
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-[8] bg-[#FFAE00] flex items-center justify-center font-semibold text-sm">
@@ -58,32 +90,32 @@ export default function DashboardPage() {
             <NavItem
               active={activePage === "overview"}
               label="Overview"
-              icon="/Leading Icon6.svg"
-              onClick={() => setActivePage("overview")}
+              icon={activePage === "overview" ? "/Leading Icon8.svg" : "/Leading Icon7.svg"}
+              onClick={() => { setActivePage("overview"); setSidebarOpen(false); }}
             />
             <NavItem
               active={activePage === "agreement"}
               label="Agreement"
-              icon="/Leading Icon1.svg"
-              onClick={() => setActivePage("agreement")}
+              icon={activePage === "agreement" ? "/Leading Icon9.svg" : "/Leading Icon1.svg"}
+              onClick={() => { setActivePage("agreement"); setSidebarOpen(false); }}
             />
             <NavItem
               active={activePage === "delivery"}
               label="Delivery"
-              icon="/Leading Icon4.svg"
-              onClick={() => setActivePage("delivery")}
+              icon={activePage === "delivery" ? "/Leading Icon10.svg" : "/Leading Icon4.svg"}
+              onClick={() => { setActivePage("delivery"); setSidebarOpen(false); }}
             />
             <NavItem
               active={activePage === "payment"}
               label="Payment"
-              icon="/Leading Icon2.svg"
-              onClick={() => setActivePage("payment")}
+              icon={activePage === "payment" ? "/Leading Icon11.svg" : "/Leading Icon2.svg"}
+              onClick={() => { setActivePage("payment"); setSidebarOpen(false); }}
             />
             <NavItem
               active={activePage === "chat"}
               label="Chat"
-              icon="/Leading Icon3.svg"
-              onClick={() => setActivePage("chat")}
+              icon={activePage === "chat" ? "/Leading Icon12.svg" : "/Leading Icon3.svg"}
+              onClick={() => { setActivePage("chat"); setSidebarOpen(false); }}
             />
           </nav>
 
@@ -91,7 +123,7 @@ export default function DashboardPage() {
             <div className="text-[15px] text-[black] mb-3">Resources</div>
             <div className="space-y-1 text-[14px] text-[black]">
               <button
-                onClick={() => setActivePage("help")}
+                onClick={() => { setActivePage("help"); setSidebarOpen(false); }}
                 className={`block w-full text-left hover:text-black flex items-center gap-2 mb-3 ${activePage === "help" ? "text-[#0C6FFF]" : ""}`}
               >
                 <span className={`w-1 h-1 rounded-full flex-shrink-0 ${activePage === "help" ? "bg-[#0C6FFF]" : "bg-[#C7C7CC]"}`}></span>
@@ -115,7 +147,7 @@ export default function DashboardPage() {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 mr-5 pl-1 py-8 flex flex-col min-h-0">
+      <main className="flex-1 mr-5 pl-1 flex flex-col min-h-0 pt-16 lg:pt-0 overflow-hidden">
         {/* Global Panels */}
         <NotificationPanel
           show={showNotifications}
@@ -163,9 +195,9 @@ export default function DashboardPage() {
             onProfileClick={() => setShowProfile(!showProfile)}
           />
         ) : (
-          <div className="flex-1 overflow-y-auto pr-4">
+          <div className="flex-1 overflow-y-auto px-4 lg:px-0 lg:pr-4 pt-8">
             {/* Top bar */}
-            <div className="flex items-center justify-between mb-8 relative rounded-2xl overflow-hidden px-6 py-6" style={{
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 relative rounded-2xl overflow-hidden px-4 sm:px-6 py-5 sm:py-6 gap-4 sm:gap-0" style={{
               backgroundImage: "url('/Frame 2147228857 (1).png')",
               backgroundSize: "cover",
               backgroundPosition: "center"
@@ -181,18 +213,21 @@ export default function DashboardPage() {
               </div>
 
               <div className="flex items-center gap-4 relative z-10">
-                <button
-                  onClick={() => setShowProfile(!showProfile)}
-                  className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA] cursor-pointer"
-                >
-                  <Image
-                    src="/right-column.png"
-                    alt="User avatar"
-                    fill
-                    sizes="36px"
-                    className="object-cover"
-                  />
-                </button>
+                <div className="relative">
+                  <button
+                    onClick={() => setShowProfile(!showProfile)}
+                    className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA] cursor-pointer"
+                  >
+                    <Image
+                      src="/right-column.png"
+                      alt="User avatar"
+                      fill
+                      sizes="36px"
+                      className="object-cover"
+                    />
+                  </button>
+                  <div className="absolute top-0 right-0 w-[11px] h-[11px] bg-[#0C6FFF] border-2 border-white rounded-full z-20"></div>
+                </div>
                 <button
                   onClick={() => setShowNotifications(!showNotifications)}
                   className="cursor-pointer hover:opacity-70 transition-opacity"
@@ -203,7 +238,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Stats cards */}
-            <section className="grid grid-cols-4 gap-4 mb-10 bg-[#ffffff] rounded-2xl p-5">
+            <section className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10 bg-[#ffffff] rounded-2xl p-5">
               <StatCard
                 tone="success"
                 title="Deliveries approved"
@@ -236,9 +271,9 @@ export default function DashboardPage() {
               />
             </section>
 
-            <section className="flex gap-6">
+            <section className="flex flex-col lg:flex-row gap-6">
               {/* Latest deliveries table */}
-              <div className="flex-1 rounded-2xl px-6 py-5">
+              <div className="flex-1 rounded-2xl px-6 py-5 overflow-x-auto">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-[14px] font-semibold text-[#111111]">
                     Latest Deliveries
@@ -246,42 +281,44 @@ export default function DashboardPage() {
                   <button className="text-[11px] text-[#1D61F2]">see more</button>
                 </div>
 
-                <div className="grid grid-cols-[1.5fr_1fr_1.2fr] text-[13px] text-[black] border-b border-[#E5E5EA] pb-2 mb-2">
-                  <span>Name</span>
-                  <span>Version badge</span>
-                  <span className="text-right pr-4">Status</span>
-                </div>
-
-                {hasData ? (
-                  <>
-                    <DeliveryRow
-                      name="Delivery  02"
-                      version="v02"
-                      status="Changes requested"
-                    />
-                    <DeliveryRow
-                      name="Delivery  01"
-                      version="v01"
-                      status="Changes requested"
-                    />
-                  </>
-                ) : (
-                  <div className="flex flex-col items-center justify-center py-12">
-                    <Image
-                      src="/Frame 2147228642.png"
-                      alt="No deliveries"
-                      width={200}
-                      height={200}
-                      className="mb-4"
-                    />
-                    <p className="text-[14px] font-semibold text-[#111111]">No Delivery items yet</p>
-                    <p className="text-[11px] text-[#8E8E93] mt-1">Once you upload a delivery item, it will appear here</p>
+                <div className="min-w-[400px]">
+                  <div className="grid grid-cols-[1.5fr_1fr_1.2fr] text-[13px] text-[black] border-b border-[#E5E5EA] pb-2 mb-2">
+                    <span>Name</span>
+                    <span>Version badge</span>
+                    <span className="text-right pr-4">Status</span>
                   </div>
-                )}
+
+                  {hasData ? (
+                    <>
+                      <DeliveryRow
+                        name="Delivery  02"
+                        version="v02"
+                        status="Changes requested"
+                      />
+                      <DeliveryRow
+                        name="Delivery  01"
+                        version="v01"
+                        status="Changes requested"
+                      />
+                    </>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-12">
+                      <Image
+                        src="/Frame 2147228642.png"
+                        alt="No deliveries"
+                        width={200}
+                        height={200}
+                        className="mb-4"
+                      />
+                      <p className="text-[14px] font-semibold text-[#111111]">No Delivery items yet</p>
+                      <p className="text-[11px] text-[#8E8E93] mt-1">Once you upload a delivery item, it will appear here</p>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Payment summary */}
-              <div className="w-[260px] h-[300px] rounded-2xl  border border-[4px] border-[white] px-6 py-5 flex flex-col gap-4">
+              <div className="w-full lg:w-[260px] h-auto lg:h-[300px] rounded-2xl border border-[4px] border-[white] px-6 py-5 flex flex-col gap-4">
                 <div className="text-[15px] font-semibold text-[#111111]">
                   Payment Summary
                 </div>
@@ -427,7 +464,7 @@ function NavItem({ label, active, icon, onClick }: NavItemProps) {
     <button
       onClick={onClick}
       className={`w-full flex items-center gap-3 px-2 py-2 rounded-lg text-left transition ${active
-        ? "text-[#0C6FFF]"
+        ? "text-[#111111] font-semibold"
         : "text-[#4B4B4D]"
         }`}
     >

@@ -8,9 +8,9 @@ interface HelpContentProps {
 
 export default function HelpContent({ onNotificationClick, onProfileClick }: HelpContentProps) {
     return (
-        <div className="flex-1 flex flex-col min-h-0 relative overflow-hidden pr-4">
+        <div className="flex-1 flex flex-col min-h-0 relative overflow-hidden px-4 lg:px-0 lg:pr-4 pt-8">
             {/* Standard Dashboard Header */}
-            <div className="flex items-center justify-between mb-8 relative rounded-2xl overflow-hidden px-6 py-6" style={{
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 relative rounded-2xl overflow-hidden px-4 sm:px-6 py-5 sm:py-6 gap-4 sm:gap-0" style={{
                 backgroundImage: "url('/Frame 2147228857 (1).png')",
                 backgroundSize: "cover",
                 backgroundPosition: "center"
@@ -26,18 +26,21 @@ export default function HelpContent({ onNotificationClick, onProfileClick }: Hel
                 </div>
 
                 <div className="flex items-center gap-4 relative z-10">
-                    <button
-                        onClick={onProfileClick}
-                        className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA] cursor-pointer"
-                    >
-                        <Image
-                            src="/right-column.png"
-                            alt="User avatar"
-                            fill
-                            sizes="36px"
-                            className="object-cover"
-                        />
-                    </button>
+                    <div className="relative">
+                        <button
+                            onClick={onProfileClick}
+                            className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA] cursor-pointer"
+                        >
+                            <Image
+                                src="/right-column.png"
+                                alt="User avatar"
+                                fill
+                                sizes="36px"
+                                className="object-cover"
+                            />
+                        </button>
+                        <div className="absolute top-0 right-0 w-[11px] h-[11px] bg-[#0C6FFF] border-2 border-white rounded-full z-20"></div>
+                    </div>
                     <button
                         onClick={onNotificationClick}
                         className="cursor-pointer hover:opacity-70 transition-opacity"
@@ -48,13 +51,13 @@ export default function HelpContent({ onNotificationClick, onProfileClick }: Hel
             </div>
 
             {/* Main Content Area (Cards) */}
-            <div className="flex-1 flex flex-col items-center justify-start px-10 z-10 overflow-y-auto min-h-0">
+            <div className="flex-1 flex flex-col items-center justify-start px-4 lg:px-10 z-10 overflow-y-auto min-h-0 pb-8">
                 {/* Cards Grid Container */}
                 <div className="flex flex-col items-center gap-6 w-full max-w-[1200px]">
                     {/* Top Row: 2 Cards */}
-                    <div className="flex flex-wrap justify-center gap-8 w-full">
+                    <div className="flex flex-wrap justify-center gap-4 lg:gap-8 w-full">
                         {/* Getting Started Card */}
-                        <div className="bg-white rounded-[20px] p-7 flex flex-col items-center text-center shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-[#F2F2F7] w-[310px] h-[260px]">
+                        <div className="bg-white rounded-[20px] p-6 lg:p-7 flex flex-col items-center text-center shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-[#F2F2F7] w-full sm:w-[310px] h-auto min-h-[240px] lg:h-[260px]">
                             <div className="w-13 h-12 bg-[#F5F5F7] rounded-[8px] flex items-center justify-center mb-4 flex-shrink-0">
                                 <Image src="/vector (13).svg" alt="Getting Started" width={24} height={24} className="object-contain" />
                             </div>
@@ -68,7 +71,7 @@ export default function HelpContent({ onNotificationClick, onProfileClick }: Hel
                         </div>
 
                         {/* Using Projio Card */}
-                        <div className="bg-white rounded-[20px] p-7 flex flex-col items-center text-center shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-[#F2F2F7] w-[310px] h-[260px]">
+                        <div className="bg-white rounded-[20px] p-6 lg:p-7 flex flex-col items-center text-center shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-[#F2F2F7] w-full sm:w-[310px] h-auto min-h-[240px] lg:h-[260px]">
                             <div className="w-13 h-12 bg-[#F5F5F7] rounded-[8px] flex items-center justify-center mb-4 overflow-hidden p-2 flex-shrink-0">
                                 <Image src="/Vector 16.svg" alt="Projio" width={22} height={22} className="object-contain" />
                             </div>
@@ -85,7 +88,7 @@ export default function HelpContent({ onNotificationClick, onProfileClick }: Hel
                     {/* Bottom Row: 1 Card Centered */}
                     <div className="flex justify-center w-full">
                         {/* Workspace Page Card */}
-                        <div className="bg-white rounded-[20px] p-7 flex flex-col items-center text-center shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-[#F2F2F7] w-[310px] h-[260px]">
+                        <div className="bg-white rounded-[20px] p-6 lg:p-7 flex flex-col items-center text-center shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-[#F2F2F7] w-full sm:w-[310px] h-auto min-h-[240px] lg:h-[260px]">
                             <div className="w-13 h-12 bg-[#F5F5F7] rounded-[8px] flex items-center justify-center mb-4 px-3 flex-shrink-0 overflow-hidden">
                                 <Image src="/icon-check-square.svg" alt="Workspace" width={40} height={40} className="object-contain" />
                             </div>

@@ -16,7 +16,7 @@ export default function EditProposalPage() {
     return (
         <div className="min-h-screen bg-white flex flex-col items-center relative gap-8">
             {/* Branded Header */}
-            <div className="w-full h-[150px] relative flex items-center px-12 overflow-hidden bg-[#FBFBFB]">
+            <div className="w-full h-[100px] md:h-[150px] relative flex items-center px-6 md:px-12 overflow-hidden bg-[#FBFBFB]">
                 <Image
                     src="/Frame 2147228857.png"
                     alt="Background Pattern"
@@ -36,9 +36,9 @@ export default function EditProposalPage() {
             </div>
 
             {/* Main Content Area */}
-            <div className="w-full max-w-[800px] px-8 pb-24 flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <div className="w-full max-w-[800px] px-6 md:px-8 pb-24 flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-700">
                 {/* Progress Stepper */}
-                <div className="flex items-center justify-center gap-8 mb-16 relative">
+                <div className="flex items-center justify-center gap-4 md:gap-8 mb-12 md:mb-16 relative">
                     <div className="flex flex-col items-center gap-2 relative">
                         <div className="h-9 w-9 rounded-full bg-[#EBF3FF] flex items-center justify-center">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0C6FFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -58,11 +58,11 @@ export default function EditProposalPage() {
                 <div className="w-full max-w-[600px] space-y-12">
                     {/* Header Text */}
                     <div className="text-left">
-                        <h1 className="text-[36px] font-[500] tracking-tight text-[#1D1D1F]">Edit Proposal</h1>
+                        <h1 className="text-[28px] md:text-[36px] font-[500] tracking-tight text-[#1D1D1F]">Edit Proposal</h1>
                     </div>
 
                     {/* From/To Display */}
-                    <div className="flex items-center gap-6 py-4">
+                    <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 py-4">
                         <div className="h-9 w-9 relative flex-shrink-0">
                             <Image
                                 src="/Leading Icon.svg"
@@ -71,18 +71,22 @@ export default function EditProposalPage() {
                                 className="object-contain"
                             />
                         </div>
-                        <div className="flex items-center gap-3 text-[15px]">
-                            <span className="text-[#86868B]">From</span>
-                            <span className="font-semibold text-[#1D1D1F]">Alex Miller</span>
-                            <span className="text-[#86868B] ml-4">To</span>
-                            <span className="font-semibold text-[#1D1D1F]">John Doe</span>
+                        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-3 text-[15px]">
+                            <div className="flex items-center gap-3">
+                                <span className="text-[#86868B]">From</span>
+                                <span className="font-semibold text-[#1D1D1F]">Alex Miller</span>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <span className="text-[#86868B] md:ml-4">To</span>
+                                <span className="font-semibold text-[#1D1D1F]">John Doe</span>
+                            </div>
                         </div>
                     </div>
 
                     <div className="space-y-10">
                         {/* Timing Section */}
-                        <div className="flex gap-8 items-start">
-                            <div className="mt-4 h-9 w-9 relative flex-shrink-0">
+                        <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start">
+                            <div className="mt-1 md:mt-4 h-9 w-9 relative flex-shrink-0">
                                 <Image
                                     src="/Leading Icon (2).svg"
                                     alt="Time Icon"
@@ -90,7 +94,7 @@ export default function EditProposalPage() {
                                     className="object-contain"
                                 />
                             </div>
-                            <div className="flex-1 grid grid-cols-2 gap-4">
+                            <div className="flex-1 grid grid-cols-2 gap-4 w-full">
                                 <div className="space-y-2">
                                     <label className="text-[13px] text-[#86868B] font-medium ml-1">Start Date</label>
                                     <Input
@@ -109,8 +113,8 @@ export default function EditProposalPage() {
                         </div>
 
                         {/* Pricing Section */}
-                        <div className="flex gap-8 items-start">
-                            <div className="mt-4 h-9 w-9 relative flex-shrink-0">
+                        <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start">
+                            <div className="mt-1 md:mt-4 h-9 w-9 relative flex-shrink-0">
                                 <Image
                                     src="/Leading Icon (3).svg"
                                     alt="Pricing Icon"
@@ -118,7 +122,7 @@ export default function EditProposalPage() {
                                     className="object-contain"
                                 />
                             </div>
-                            <div className="flex-1 grid grid-cols-2 gap-4">
+                            <div className="flex-1 grid grid-cols-2 gap-4 w-full">
                                 <div className="space-y-2">
                                     <label className="text-[13px] text-[#86868B] font-medium ml-1">Currency</label>
                                     <div className="relative">
@@ -147,9 +151,9 @@ export default function EditProposalPage() {
                         </div>
 
                         {/* Note Section */}
-                        <div className="flex gap-8 items-start">
-                            <div className="mt-4 text-[15px] font-medium text-[#1D1D1F] w-[22px]">Note</div>
-                            <div className="flex-1">
+                        <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start">
+                            <div className="mt-1 md:mt-4 text-[15px] font-medium text-[#1D1D1F] md:w-[22px]">Note</div>
+                            <div className="flex-1 w-full">
                                 <textarea
                                     defaultValue="Lorem ipsum volutpat molestie sed sed pulvinar sagittis eget duis mattis ipsum ullamcorper suspendisse purus."
                                     className="w-full min-h-[120px] p-4 rounded-xl border border-[#C7C7CC] focus:border-[#0C6FFF] outline-none transition-all resize-none text-[15px] font-medium leading-relaxed"

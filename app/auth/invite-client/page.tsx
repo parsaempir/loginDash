@@ -40,12 +40,19 @@ export default function InviteClientPage() {
     }
 
     return (
-        <div className="flex min-h-screen bg-white">
+        <div className="flex min-h-screen lg:h-screen bg-white overflow-y-auto lg:overflow-hidden">
             {/* Left Column - Form */}
-            <div className="flex w-full flex-col p-8 lg:w-1/2 lg:p-16 xl:p-24 xl:pr-10 2xl:px-40 transition-all duration-300">
-                <div className="ml-auto w-full max-w-[480px] animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="flex w-full flex-col p-6 md:p-12 lg:w-1/2 lg:p-16 xl:p-24 xl:pr-10 2xl:px-40 transition-all duration-300">
+                <div className="mx-auto lg:ml-auto lg:mr-0 w-full max-w-[480px] animate-in fade-in slide-in-from-bottom-4 duration-500 py-10 lg:py-0">
                     {/* Logo Section */}
-                    <div className="mb-24 flex items-center">
+                    <div className="mb-10 lg:mb-24 flex items-center">
+                        ...
+                        <div className="mb-8 lg:mb-10 space-y-4">
+                            <h1 className="text-[28px] md:text-[32px] font-bold tracking-tight text-[#1D1D1F]">Invite Client</h1>
+                            <p className="text-[14px] md:text-[15px] text-[#86868B] leading-relaxed">
+                                Add your client to Kick-off your project
+                            </p>
+                        </div>
                         <div className="flex items-center gap-2">
                             <Image
                                 src="/Vector 16.svg"
@@ -58,9 +65,9 @@ export default function InviteClientPage() {
                         </div>
                     </div>
 
-                    <div className="mb-10 space-y-4">
-                        <h1 className="text-[32px] font-bold tracking-tight text-[#1D1D1F]">Invite Client</h1>
-                        <p className="text-[15px] text-[#86868B] leading-relaxed">
+                    <div className="mb-8 lg:mb-10 space-y-4">
+                        <h1 className="text-[28px] md:text-[32px] font-bold tracking-tight text-[#1D1D1F]">Invite Client</h1>
+                        <p className="text-[14px] md:text-[15px] text-[#86868B] leading-relaxed">
                             Add your client to Kick-off your project
                         </p>
                     </div>

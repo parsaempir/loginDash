@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ArrowLeft } from "lucide-react"
@@ -14,11 +15,11 @@ export default function LoginPage() {
     const [userEmail, setUserEmail] = useState("mail@example.com")
 
     return (
-        <div className="flex h-screen bg-white overflow-hidden">
+        <div className="flex min-h-screen lg:h-screen bg-white overflow-y-auto lg:overflow-hidden">
             {/* Left Column - Form */}
-            <div className={`flex flex-col transition-all duration-300 ${step === "success" ? "w-full" : "w-full lg:w-1/2 p-8 lg:p-16 xl:p-24 xl:pr-10 2xl:px-40"}`}>
+            <div className={`flex flex-col transition-all duration-300 ${step === "success" ? "w-full" : "w-full lg:w-1/2 p-6 md:p-12 lg:p-16 xl:p-24 xl:pr-10 2xl:px-40"}`}>
                 {/* Content Section */}
-                <div className={`mx-auto lg:ml-auto lg:mr-0 w-full ${step === "success" ? "max-w-none h-full flex items-center justify-center relative" : "max-w-[480px]"}`}>
+                <div className={`mx-auto lg:ml-auto lg:mr-0 w-full ${step === "success" ? "max-w-none h-full flex items-center justify-center relative py-20" : "max-w-[480px]"}`}>
                     {step === "success" && (
                         <div className="absolute inset-0 -z-10 h-full w-full">
                             <Image
@@ -33,7 +34,7 @@ export default function LoginPage() {
 
                     {/* Logo Section & Back Button */}
                     {step !== "success" && (
-                        <div className="mb-16 flex items-center gap-4">
+                        <div className="mb-8 lg:mb-16 flex items-center gap-4">
                             {(step === "reset-password" || step === "verify-code" || step === "new-password") && (
                                 <button
                                     onClick={() => {
@@ -109,18 +110,26 @@ export default function LoginPage() {
 }
 
 function LoginForm({ onForgotPassword }: { onForgotPassword: () => void }) {
+    const router = useRouter()
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        router.push("/dashboard")
+    }
+
     return (
         <div className="animate-in fade-in slide-in-from-left-4 duration-500">
-            <div className="mb-10 space-y-3">
-                <h1 className="text-[32px] font-bold tracking-tight text-[#1D1D1F]">Welcome Back!</h1>
-                <p className="text-[15px] text-[#86868B]">Please login to continue to your account.</p>
+            <div className="mb-8 lg:mb-10 space-y-3">
+                <h1 className="text-[28px] md:text-[32px] font-bold tracking-tight text-[#1D1D1F]">Welcome Back!</h1>
+                <p className="text-[14px] md:text-[15px] text-[#86868B]">Please login to continue to your account.</p>
             </div>
 
-            <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-5" onSubmit={handleSubmit}>
                 <Input
                     label="Email"
                     placeholder="mail@example.com"
                     type="email"
+                    required
                 />
 
                 <div className="space-y-1">
@@ -128,6 +137,7 @@ function LoginForm({ onForgotPassword }: { onForgotPassword: () => void }) {
                         label="Password"
                         placeholder="Enter your password"
                         type="password"
+                        required
                     />
                 </div>
 
@@ -157,7 +167,7 @@ function LoginForm({ onForgotPassword }: { onForgotPassword: () => void }) {
                     </button>
                 </div>
 
-                <Button variant="primary" className="w-full text-base font-semibold px-12">
+                <Button variant="primary" type="submit" className="w-full text-base font-semibold px-12">
                     Sign in
                 </Button>
             </form>
@@ -169,8 +179,8 @@ function LoginForm({ onForgotPassword }: { onForgotPassword: () => void }) {
             </div>
 
             {/* Social Logins */}
-            <div className="grid grid-cols-2 gap-3">
-                <Button variant="social" className="gap-2 px-8 whitespace-nowrap">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <Button variant="social" className="gap-2 px-4 md:px-8 whitespace-nowrap overflow-hidden">
                     <Image
                         src="/linked_in.svg"
                         alt="Linkedin"
@@ -209,10 +219,10 @@ interface StepProps {
 
 function ResetPasswordForm({ email, setEmail, onVerify }: StepProps) {
     return (
-        <div className="animate-in fade-in slide-in-from-right-4 duration-500 mt-40">
-            <div className="mb-10 space-y-3">
-                <h1 className="text-[32px] font-bold tracking-tight text-[#1D1D1F]">Reset your password</h1>
-                <p className="text-[15px] text-[#86868B] leading-relaxed">
+        <div className="animate-in fade-in slide-in-from-right-4 duration-500 py-10 lg:mt-40">
+            <div className="mb-8 lg:mb-10 space-y-3">
+                <h1 className="text-[28px] md:text-[32px] font-bold tracking-tight text-[#1D1D1F]">Reset your password</h1>
+                <p className="text-[14px] md:text-[15px] text-[#86868B] leading-relaxed">
                     You'll receive an email shortly with a link to reset your password.
                 </p>
             </div>
@@ -297,9 +307,9 @@ function ResetPasswordVerificationForm({ email, onSuccess }: { email: string, on
     }
 
     return (
-        <div className="animate-in fade-in slide-in-from-right-4 duration-500 mt-40">
-            <div className="mb-10 space-y-3">
-                <h1 className="text-[32px] font-bold tracking-tight text-[#1D1D1F]">Check your inbox.</h1>
+        <div className="animate-in fade-in slide-in-from-right-4 duration-500 py-10 lg:mt-40">
+            <div className="mb-8 lg:mb-10 space-y-3">
+                <h1 className="text-[28px] md:text-[32px] font-bold tracking-tight text-[#1D1D1F]">Check your inbox.</h1>
                 <p className="text-[14px] text-[#5E5E5E] leading-relaxed">
                     To reset your password, please enter the 6-digit verification code sent to your email address.
                 </p>
@@ -311,9 +321,9 @@ function ResetPasswordVerificationForm({ email, onSuccess }: { email: string, on
             </div>
 
             <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
-                <div className="flex gap-4">
+                <div className="flex gap-2 md:gap-4">
                     {otp.map((digit, i) => (
-                        <div key={i} className="relative h-48 flex-1">
+                        <div key={i} className="relative h-32 md:h-48 flex-1">
                             <input
                                 id={`otp-${i}`}
                                 type="text"
@@ -411,10 +421,10 @@ function SetNewPasswordForm({ onSuccess }: { onSuccess: () => void }) {
     }
 
     return (
-        <div className="animate-in fade-in slide-in-from-right-4 duration-500 mt-40">
-            <div className="mb-10 space-y-3">
-                <h1 className="text-[32px] font-bold tracking-tight text-[#1D1D1F]">Reset Password</h1>
-                <p className="text-[15px] text-[#5E5E5E] leading-relaxed">
+        <div className="animate-in fade-in slide-in-from-right-4 duration-500 py-10 lg:mt-40">
+            <div className="mb-8 lg:mb-10 space-y-3">
+                <h1 className="text-[28px] md:text-[32px] font-bold tracking-tight text-[#1D1D1F]">Reset Password</h1>
+                <p className="text-[14px] md:text-[15px] text-[#5E5E5E] leading-relaxed">
                     Enter a new password below to change your password.
                 </p>
             </div>
@@ -463,12 +473,21 @@ function SetNewPasswordForm({ onSuccess }: { onSuccess: () => void }) {
 }
 
 function SuccessScreen() {
+    const router = useRouter()
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            router.push("/dashboard")
+        }, 3000)
+        return () => clearTimeout(timer)
+    }, [router])
+
     return (
-        <div className="flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-700 min-h-screen w-full">
-            <div className="flex items-center gap-4 mb-3">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#F2F2F2]">
+        <div className="flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-700 min-h-[500px] lg:min-h-screen w-full px-4 text-center">
+            <div className="flex flex-col md:flex-row items-center gap-4 mb-3">
+                <div className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full bg-[#F2F2F2]">
                     <svg
-                        className="h-8 w-8 text-[#4CAF50]"
+                        className="h-6 w-6 md:h-8 md:w-8 text-[#4CAF50]"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -477,9 +496,9 @@ function SuccessScreen() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                 </div>
-                <h2 className="text-[36px] font-bold text-[#1D1D1F] tracking-tight">Done</h2>
+                <h2 className="text-[28px] md:text-[36px] font-bold text-[#1D1D1F] tracking-tight">Done</h2>
             </div>
-            <p className="text-[#1D1D1F] text-[16px] font-medium opacity-80">
+            <p className="text-[#1D1D1F] text-[14px] md:text-[16px] font-medium opacity-80 max-w-[280px] md:max-w-none">
                 you'll jump into dashboard in a few seconds
             </p>
         </div>

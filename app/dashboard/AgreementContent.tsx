@@ -11,16 +11,18 @@ export default function AgreementContent({ onNotificationClick, onProfileClick }
     const [activeTab, setActiveTab] = useState("requirements");
 
     return (
-        <div className="flex-1 overflow-y-auto pr-4">
+        <div className="flex-1 overflow-y-auto px-4 lg:px-0 lg:pr-4 pt-8">
             {/* Top bar with background */}
-            <div className="flex items-center justify-between mb-8 relative rounded-2xl overflow-hidden px-6 py-6" style={{
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 relative rounded-2xl overflow-hidden px-4 sm:px-6 py-5 sm:py-6 gap-4 sm:gap-0" style={{
                 backgroundImage: "url('/Frame 2147228857 (1).png')",
                 backgroundSize: "cover",
                 backgroundPosition: "center"
             }}>
                 <div className="flex flex-col gap-1 relative z-10">
-                    {activeTab === "requirements" && (
+                    {activeTab === "requirements" ? (
                         <div className="text-[15px] pl-5 text-[#black]">Overview</div>
+                    ) : (
+                        <div className="text-[15px] pl-5 text-[#black]">Agreement</div>
                     )}
                     <h1 className="text-[22px] font-semibold text-[#111111]">
                         Agreement
@@ -31,18 +33,21 @@ export default function AgreementContent({ onNotificationClick, onProfileClick }
                 </div>
 
                 <div className="flex items-center gap-4 relative z-10">
-                    <button
-                        onClick={onProfileClick}
-                        className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA] cursor-pointer"
-                    >
-                        <Image
-                            src="/right-column.png"
-                            alt="User avatar"
-                            fill
-                            sizes="36px"
-                            className="object-cover"
-                        />
-                    </button>
+                    <div className="relative">
+                        <button
+                            onClick={onProfileClick}
+                            className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA] cursor-pointer"
+                        >
+                            <Image
+                                src="/right-column.png"
+                                alt="User avatar"
+                                fill
+                                sizes="36px"
+                                className="object-cover"
+                            />
+                        </button>
+                        <div className="absolute top-0 right-0 w-[11px] h-[11px] bg-[#0C6FFF] border-2 border-white rounded-full z-20"></div>
+                    </div>
                     <button
                         onClick={onNotificationClick}
                         className="cursor-pointer hover:opacity-70 transition-opacity"

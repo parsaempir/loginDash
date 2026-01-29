@@ -34,12 +34,12 @@ export default function CreateWorkspacePage() {
     }
 
     return (
-        <div className="flex min-h-screen bg-white">
+        <div className="flex min-h-screen lg:h-screen bg-white overflow-y-auto lg:overflow-hidden">
             {/* Left Column - Form */}
-            <div className="flex w-full flex-col p-8 lg:w-1/2 lg:p-16 xl:p-24 xl:pr-10 2xl:px-40 transition-all duration-300">
-                <div className="ml-auto w-full max-w-[480px] animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="flex w-full flex-col p-6 md:p-12 lg:w-1/2 lg:p-16 xl:p-24 xl:pr-10 2xl:px-40 transition-all duration-300">
+                <div className="mx-auto lg:ml-auto lg:mr-0 w-full max-w-[480px] animate-in fade-in slide-in-from-bottom-4 duration-500 py-10 lg:py-0">
                     {/* Logo Section */}
-                    <div className="mb-14 flex items-center">
+                    <div className="mb-10 lg:mb-14 flex items-center">
                         <div className="flex items-center gap-2">
                             <Image
                                 src="/Vector 16.svg"
@@ -52,10 +52,10 @@ export default function CreateWorkspacePage() {
                         </div>
                     </div>
 
-                    <div className="mb-10 space-y-4">
-                        <h1 className="text-[32px] font-bold tracking-tight text-[#1D1D1F]">Create your workspace</h1>
-                        <p className="text-[15px] text-[#86868B] leading-relaxed">
-                            Your account has been successfully verified.<br />
+                    <div className="mb-8 lg:mb-10 space-y-4">
+                        <h1 className="text-[28px] md:text-[32px] font-bold tracking-tight text-[#1D1D1F]">Create your workspace</h1>
+                        <p className="text-[14px] md:text-[15px] text-[#86868B] leading-relaxed">
+                            Your account has been successfully verified.<br className="hidden md:block" />
                             Next, provide your organization's name and address to proceed.
                         </p>
                     </div>
@@ -72,7 +72,7 @@ export default function CreateWorkspacePage() {
                             />
                             <div
                                 onClick={handleCircleClick}
-                                className="h-[128px] w-[128px] rounded-full bg-[#F5F8FF] flex items-center justify-center cursor-pointer hover:bg-[#EEF3FF] transition-all overflow-hidden border-none group relative"
+                                className="h-[100px] w-[100px] md:h-[128px] md:w-[128px] rounded-full bg-[#F5F8FF] flex items-center justify-center cursor-pointer hover:bg-[#EEF3FF] transition-all overflow-hidden border-none group relative"
                             >
                                 {profileImage ? (
                                     <Image
@@ -112,7 +112,7 @@ export default function CreateWorkspacePage() {
                             <p className="text-[13px] font-medium text-[#1D1D1F]">Description</p>
                             <textarea
                                 placeholder="A short note about what this workspace is for"
-                                className="w-full min-h-[120px] p-4 rounded-xl border border-[#E5E5E5] focus:border-[#0C6FFF] outline-none transition-all resize-none text-[15px] placeholder:text-[#86868B]/50"
+                                className="w-full min-h-[100px] md:min-h-[120px] p-4 rounded-xl border border-[#E5E5E5] focus:border-[#0C6FFF] outline-none transition-all resize-none text-[15px] placeholder:text-[#86868B]/50"
                             />
                         </div>
 

@@ -29,7 +29,7 @@ export default function ClientReviewProposalPage() {
     return (
         <div className="min-h-screen bg-white flex flex-col items-center relative">
             {/* Branded Header */}
-            <div className="w-full h-[150px] relative flex items-center px-12 overflow-hidden bg-[#FBFBFB]">
+            <div className="w-full h-[100px] md:h-[150px] relative flex items-center px-6 md:px-12 overflow-hidden bg-[#FBFBFB]">
                 <Image
                     src="/Frame 2147228857.png"
                     alt="Background Pattern"
@@ -49,7 +49,7 @@ export default function ClientReviewProposalPage() {
             </div>
 
             {/* Progress Stepper */}
-            <div className="flex items-center justify-center gap-8 mt-12 mb-20 px-6">
+            <div className="flex items-center justify-center gap-4 md:gap-8 mt-8 md:mt-12 mb-12 md:mb-20 px-6">
                 <div className="flex flex-col items-center gap-2 relative">
                     <div className="h-9 w-9 rounded-full bg-[#E5F1FF] flex items-center justify-center transition-all duration-300">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0C6FFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -67,11 +67,11 @@ export default function ClientReviewProposalPage() {
             </div>
 
             {/* Main Content Area */}
-            <div className="w-full max-w-[720px] px-8 pb-32 animate-in fade-in slide-in-from-bottom-2 duration-500">
-                <div className="space-y-16">
+            <div className="w-full max-w-[720px] px-6 md:px-8 pb-32 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                <div className="space-y-12 md:space-y-16">
                     {/* Page Header */}
                     <div className="space-y-4">
-                        <h1 className="text-[40px] font-bold tracking-tight text-[#1D1D1F]">Review Proposal</h1>
+                        <h1 className="text-[32px] md:text-[40px] font-bold tracking-tight text-[#1D1D1F]">Review Proposal</h1>
                         <p className="text-[16px] text-[#424245] leading-relaxed max-w-[480px]">
                             The freelancer sent a proposal for this project.<br />
                             Review the details below and choose an action.
@@ -81,52 +81,52 @@ export default function ClientReviewProposalPage() {
                     {/* Proposal Details Sections */}
                     <div className="space-y-12">
                         {/* Users Section */}
-                        <div className="flex items-center gap-8">
-                            <div className="h-14 w-14 rounded-full   flex items-center justify-center flex-shrink-0">
+                        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+                            <div className="h-12 w-12 md:h-14 md:w-14 rounded-full flex items-center justify-center flex-shrink-0">
                                 <Image src="/Leading Icon.svg" alt="User Icon" width={32} height={32} />
                             </div>
-                            <div className="flex items-center gap-14 text-[15px]">
+                            <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-14 text-[15px]">
                                 <div className="flex items-center gap-3">
-                                    <span className="text-[#86868B] font-medium">From</span>
+                                    <span className="text-[#86868B] font-medium min-w-[40px]">From</span>
                                     <span className="font-[400] text-[#303030] text-[17px]">Alex Miller</span>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <span className="text-[#86868B] font-medium">To</span>
-                                    <span className="font-[400]  text-[#303030] text-[17px]">John Doe</span>
+                                    <span className="text-[#86868B] font-medium min-w-[40px]">To</span>
+                                    <span className="font-[400] text-[#303030] text-[17px]">John Doe</span>
                                 </div>
                             </div>
                         </div>
 
                         {/* Dates Section */}
-                        <div className="flex items-center gap-8">
-                            <div className="h-14 w-14 rounded-full  flex items-center justify-center flex-shrink-0">
+                        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+                            <div className="h-12 w-12 md:h-14 md:w-14 rounded-full flex items-center justify-center flex-shrink-0">
                                 <Image src="/Leading Icon (2).svg" alt="Clock Icon" width={32} height={32} />
                             </div>
-                            <div className="flex items-center gap-20 text-[15px]">
+                            <div className="grid grid-cols-2 md:flex md:items-center gap-6 md:gap-20 text-[15px]">
                                 <div className="space-y-1.5">
                                     <p className="text-[13px] text-[#86868B] font-medium">Start Date</p>
-                                    <p className="font-[400] text-[#303030] text-[18px]">June,01,2026</p>
+                                    <p className="font-[400] text-[#303030] text-[17px] md:text-[18px]">June,01,2026</p>
                                 </div>
                                 <div className="space-y-1.5">
                                     <p className="text-[13px] text-[#86868B] font-medium">End Date</p>
-                                    <p className="font-[400] text-[#303030] text-[18px]">June,30,2026</p>
+                                    <p className="font-[400] text-[#303030] text-[17px] md:text-[18px]">June,30,2026</p>
                                 </div>
                             </div>
                         </div>
 
                         {/* Pricing Section */}
-                        <div className="flex items-center gap-8">
-                            <div className="h-14 w-14 rounded-full flex items-center justify-center flex-shrink-0">
+                        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+                            <div className="h-12 w-12 md:h-14 md:w-14 rounded-full flex items-center justify-center flex-shrink-0">
                                 <Image src="/Leading Icon (3).svg" alt="Pricing Icon" width={32} height={32} />
                             </div>
-                            <div className="flex items-center gap-20 text-[15px]">
+                            <div className="grid grid-cols-2 md:flex md:items-center gap-6 md:gap-20 text-[15px]">
                                 <div className="space-y-1.5">
                                     <p className="text-[13px] text-[#86868B] font-medium">Currency</p>
-                                    <p className="font-[400] text-[#303030] text-[18px]">USD</p>
+                                    <p className="font-[400] text-[#303030] text-[17px] md:text-[18px]">USD</p>
                                 </div>
                                 <div className="space-y-1.5">
                                     <p className="text-[13px] text-[#86868B] font-medium">Pricing Model</p>
-                                    <p className="font-[400] text-[#303030] text-[18px]">Monthly</p>
+                                    <p className="font-[400] text-[#303030] text-[17px] md:text-[18px]">Monthly</p>
                                 </div>
                             </div>
                         </div>
@@ -141,17 +141,17 @@ export default function ClientReviewProposalPage() {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex items-center justify-start gap-4 pt-10">
+                    <div className="flex flex-col md:flex-row items-center justify-start gap-4 pt-4 md:pt-10">
                         <Button
                             onClick={() => setShowAcceptModal(true)}
-                            className="h-[56px] w-[280px] bg-[#0C6FFF] hover:bg-[#0056D2] text-white font-bold rounded-xl shadow-none transition-all text-base"
+                            className="h-[56px] w-full md:w-[280px] bg-[#0C6FFF] hover:bg-[#0056D2] text-white font-bold rounded-xl shadow-none transition-all text-base"
                         >
                             Accept
                         </Button>
                         <Button
                             onClick={() => setShowRequestModal(true)}
                             variant="outline"
-                            className="h-[56px] w-[280px] bg-[#F2F2F2] hover:bg-[#E5E5E5] text-[#1D1D1F] border-none font-bold rounded-xl shadow-none transition-all text-base"
+                            className="h-[56px] w-full md:w-[280px] bg-[#F2F2F2] hover:bg-[#E5E5E5] text-[#1D1D1F] border-none font-bold rounded-xl shadow-none transition-all text-base"
                         >
                             Request Changes
                         </Button>
@@ -166,9 +166,9 @@ export default function ClientReviewProposalPage() {
                         className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300"
                         onClick={() => setShowRequestModal(false)}
                     />
-                    <div className="relative w-full max-w-[640px] bg-white rounded-[24px] p-8 shadow-2xl animate-in zoom-in-95 fade-in duration-300">
+                    <div className="relative w-full max-w-[640px] bg-white rounded-[24px] p-6 md:p-8 shadow-2xl animate-in zoom-in-95 fade-in duration-300">
                         <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-[24px] font-bold text-[#1D1D1F]">Request Changes</h2>
+                            <h2 className="text-[20px] md:text-[24px] font-bold text-[#1D1D1F]">Request Changes</h2>
                             <button
                                 onClick={() => setShowRequestModal(false)}
                                 className="h-10 w-10 flex items-center justify-center rounded-full hover:bg-[#F2F2F2] transition-colors"
@@ -226,22 +226,22 @@ export default function ClientReviewProposalPage() {
                         className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300"
                         onClick={() => setShowAcceptModal(false)}
                     />
-                    <div className="relative w-full max-w-[640px] bg-white rounded-[24px] p-10  shadow-2xl animate-in zoom-in-95 fade-in duration-300 text-start">
-                        <h2 className="text-[28px] font-bold text-[#1D1D1F] mb-4">Accept Proposal?</h2>
-                        <p className="text-[17px] text-[#424245] mb-10 leading-relaxed font-medium">
+                    <div className="relative w-full max-w-[640px] bg-white rounded-[24px] p-6 md:p-10  shadow-2xl animate-in zoom-in-95 fade-in duration-300 text-start">
+                        <h2 className="text-[24px] md:text-[28px] font-bold text-[#1D1D1F] mb-4">Accept Proposal?</h2>
+                        <p className="text-[15px] md:text-[17px] text-[#424245] mb-8 md:mb-10 leading-relaxed font-medium">
                             Are you sure you want to accept the proposal?
                         </p>
 
-                        <div className="flex items-center justify-between  ">
+                        <div className="flex flex-col-reverse md:flex-row items-center gap-6 md:justify-between">
                             <button
                                 onClick={() => setShowAcceptModal(false)}
-                                className="text-[18px] font-bold text-[#1D1D1F] hover:opacity-70 pl-20 transition-opacity"
+                                className="text-[16px] md:text-[18px] font-bold text-[#1D1D1F] hover:opacity-70 transition-opacity"
                             >
                                 Back
                             </button>
                             <Button
                                 onClick={handleAccept}
-                                className="h-[50px] w-[280px] bg-[#0C6FFF] hover:bg-[#0056D2] text-white font-bold rounded-2xl shadow-none transition-all text-[18px]"
+                                className="h-[50px] w-full md:w-[280px] bg-[#0C6FFF] hover:bg-[#0056D2] text-white font-bold rounded-2xl shadow-none transition-all text-[16px] md:text-[18px]"
                             >
                                 Accept
                             </Button>

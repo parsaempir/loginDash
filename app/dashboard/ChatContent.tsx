@@ -147,16 +147,16 @@ export default function ChatContent({ onNotificationClick, onProfileClick }: Cha
     };
 
     return (
-        <div className="flex flex-col h-full  rounded-2xl overflow-hidden  relative" onClick={() => { setShowAttachmentMenu(false); setActiveMenuId(null); }}>
+        <div className="flex flex-col h-full rounded-2xl overflow-hidden relative" onClick={() => { setShowAttachmentMenu(false); setActiveMenuId(null); }}>
             {/* Header */}
-            <div className="flex items-center justify-between px-8 py-4 bg-transparent flex-shrink-0 min-h-[73px]">
-                <h1 className="text-[18px] font-semibold text-[#111111]">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-4 sm:px-8 py-4 bg-transparent flex-shrink-0 min-h-[73px] gap-2 sm:gap-0">
+                <h1 className="text-[16px] sm:text-[18px] font-semibold text-[#111111]">
                     {isSearchVisible ? 'Search result' : 'Rode wing Chat'}
                 </h1>
 
                 <div className="flex items-center gap-4">
                     {isSearchVisible && (
-                        <div className="flex items-center bg-[#F2F2F7] rounded-xl px-4 h-[40px] w-[280px] animate-in fade-in slide-in-from-right-4 duration-300 relative group">
+                        <div className="flex items-center bg-[#F2F2F7] rounded-xl px-4 h-[40px] w-full sm:w-[280px] animate-in fade-in slide-in-from-right-4 duration-300 relative group">
                             <input
                                 autoFocus
                                 type="text"
@@ -219,7 +219,7 @@ export default function ChatContent({ onNotificationClick, onProfileClick }: Cha
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-8 flex flex-col" ref={scrollContainerRef}>
+            <div className="flex-1 overflow-y-auto p-4 lg:p-8 flex flex-col" ref={scrollContainerRef}>
                 {messages.length === 0 ? (
                     <div className="flex-1 flex flex-col items-center justify-center animate-in fade-in duration-500">
                         <div className="relative w-[240px] h-[160px] mb-6">
@@ -263,7 +263,7 @@ export default function ChatContent({ onNotificationClick, onProfileClick }: Cha
                                         )}
                                         {/* Avatar - Only show if sender changed */}
                                         <div
-                                            className={`relative w-10 h-10 flex-shrink-0 ${!isSameSender ? 'cursor-pointer hover:opacity-80 transition-opacity' : ''}`}
+                                            className={`relative w-8 h-8 lg:w-10 lg:h-10 flex-shrink-0 ${!isSameSender ? 'cursor-pointer hover:opacity-80 transition-opacity' : ''}`}
                                             onClick={() => !isSameSender && openProfile(msg.sender)}
                                         >
                                             {!isSameSender && (
@@ -423,7 +423,7 @@ export default function ChatContent({ onNotificationClick, onProfileClick }: Cha
                     )}
 
                     {/* Input Row */}
-                    <div className="flex items-center gap-4 px-6 h-[72px]">
+                    <div className="flex items-center gap-2 lg:gap-4 px-3 lg:px-6 h-[72px]">
                         <button
                             className={`text-[#1D61F2] hover:opacity-70 transition-transform ${showAttachmentMenu ? 'rotate-45' : ''}`}
                             onClick={(e) => {
@@ -456,7 +456,7 @@ export default function ChatContent({ onNotificationClick, onProfileClick }: Cha
 
             {/* Floating Selection Bar */}
             {isSelectionMode && (
-                <div className="absolute bottom-[100px] left-1/2 -translate-x-1/2 bg-white rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] border border-[#E5E5EA] px-6 h-[56px] flex items-center gap-6 z-40 animate-in slide-in-from-bottom-4 duration-300">
+                <div className="absolute bottom-[100px] left-4 right-4 lg:left-1/2 lg:right-auto lg:-translate-x-1/2 bg-white rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] border border-[#E5E5EA] px-4 lg:px-6 h-[56px] flex items-center justify-center gap-4 lg:gap-6 z-40 animate-in slide-in-from-bottom-4 duration-300">
                     <button
                         onClick={() => toggleSelectionMode()}
                         className="p-1 hover:bg-[#F2F2F7] rounded-lg transition-colors"
@@ -531,14 +531,16 @@ export default function ChatContent({ onNotificationClick, onProfileClick }: Cha
                         </div>
 
                         {/* Modal Body */}
-                        <div className="px-10 pb-10 flex flex-col items-center">
-                            <div className="relative w-[220px] h-[220px] mb-8">
+                        <div className="px-6 lg:px-10 pb-8 lg:pb-10 flex flex-col items-center">
+                            <div className="relative w-[180px] h-[180px] lg:w-[220px] lg:h-[220px] mb-6 lg:mb-8">
                                 <Image
                                     src={selectedUser.avatar}
                                     alt={selectedUser.name}
                                     fill
                                     className="rounded-[40px] object-cover"
                                 />
+                                {/* Status Dot */}
+                                <div className="absolute top-0 right-0 w-[40px] h-[40px] bg-[#0C6FFF] border-[6px] border-white rounded-full z-20 -translate-x-1 underline-offset-4"></div>
                             </div>
 
                             <h3 className="text-[32px] font-bold text-[#111111] mb-2">{selectedUser.name}</h3>

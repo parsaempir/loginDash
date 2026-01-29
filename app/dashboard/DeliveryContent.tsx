@@ -35,9 +35,9 @@ export default function DeliveryContent({ onNotificationClick, onProfileClick }:
     }, [showSuccessNotification]);
 
     return (
-        <div className="flex-1 overflow-y-auto pr-4">
+        <div className="flex-1 overflow-y-auto px-4 lg:px-0 lg:pr-4 pt-8">
             {/* Top bar with background */}
-            <div className="flex items-center justify-between mb-8 relative rounded-2xl overflow-hidden px-6 py-6" style={{
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 relative rounded-2xl overflow-hidden px-4 sm:px-6 py-5 sm:py-6 gap-4 sm:gap-0" style={{
                 backgroundImage: "url('/Frame 2147228857 (1).png')",
                 backgroundSize: "cover",
                 backgroundPosition: "center"
@@ -53,18 +53,21 @@ export default function DeliveryContent({ onNotificationClick, onProfileClick }:
                 </div>
 
                 <div className="flex items-center gap-4 relative z-10">
-                    <button
-                        onClick={onProfileClick}
-                        className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA] cursor-pointer"
-                    >
-                        <Image
-                            src="/right-column.png"
-                            alt="User avatar"
-                            fill
-                            sizes="36px"
-                            className="object-cover"
-                        />
-                    </button>
+                    <div className="relative">
+                        <button
+                            onClick={onProfileClick}
+                            className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA] cursor-pointer"
+                        >
+                            <Image
+                                src="/right-column.png"
+                                alt="User avatar"
+                                fill
+                                sizes="36px"
+                                className="object-cover"
+                            />
+                        </button>
+                        <div className="absolute top-0 right-0 w-[11px] h-[11px] bg-[#0C6FFF] border-2 border-white rounded-full z-20"></div>
+                    </div>
                     <button
                         onClick={onNotificationClick}
                         className="cursor-pointer hover:opacity-70 transition-opacity"
@@ -155,120 +158,122 @@ export default function DeliveryContent({ onNotificationClick, onProfileClick }:
 
             {hasDeliveries ? (
                 /* Delivery Files Table */
-                <div className="rounded-xl">
-                    {/* Table Header */}
-                    <div className="grid grid-cols-5 gap-4 px-6 py-4 border-b border-[#E5E5EA]">
-                        <div className="text-[12px] font-medium text-[#8E8E93]">Name</div>
-                        <div className="text-[12px] font-medium text-[#8E8E93]">Version badge</div>
-                        <div className="text-[12px] font-medium text-[#8E8E93]">Status</div>
-                        <div className="text-[12px] font-medium text-[#8E8E93]">Files</div>
-                        <div className="text-[12px] font-medium text-[#8E8E93]">Uploaded by</div>
-                    </div>
-
-                    {/* Table Rows */}
-                    <div className="divide-y divide-[#E5E5EA]/50">
-                        {/* Delivery 03 */}
-                        <div className="grid grid-cols-5 gap-4 px-6 py-5 items-center bg-[#F7FAFF]">
-                            <div className="flex items-center gap-2">
-                                <span className="text-[15px] font-medium text-[#111111]">Delivery_03</span>
-                                <span className="bg-[#EBF3FF] text-[#1D61F2] text-[10px] px-2 py-0.5 rounded-full font-medium">Latest</span>
-                            </div>
-                            <div className="text-[14px] text-[#2C2C2E] font-medium">v03</div>
-                            <div>
-                                {isProjectFinished ? (
-                                    <span className="bg-[#F2F2F7] text-[#8E8E93] text-[12px] px-4 py-1.5 rounded-full font-medium inline-block min-w-[100px] text-center opacity-60">Approved</span>
-                                ) : delivery03Status === "Pending" ? (
-                                    <button
-                                        onClick={() => setIsSubmitModalOpen(true)}
-                                        className="bg-[#FFF9F2] text-[#FF9500] text-[12px] px-4 py-1.5 rounded-full font-medium inline-block min-w-[100px] text-center hover:bg-[#FFF2E0] transition-colors"
-                                    >
-                                        Pending
-                                    </button>
-                                ) : (
-                                    <span className="bg-[#E8F5E9] text-[#34C759] text-[12px] px-4 py-1.5 rounded-full font-medium inline-block min-w-[100px] text-center">Approved</span>
-                                )}
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <div className="relative w-8 h-8">
-                                    <Image src="/Document file icon.svg" alt="file" width={32} height={32} />
-                                </div>
-                                <div>
-                                    <div className="text-[14px] text-[#111111] font-medium">image.png</div>
-                                    <div className="text-[11px] text-[#8E8E93]">3.3 MB</div>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <div className="relative w-9 h-9 rounded-xl overflow-hidden shadow-sm">
-                                    <Image src="/right-column.png" alt="user" fill className="object-cover" />
-                                </div>
-                                <div>
-                                    <div className="text-[13px] text-[#111111] font-semibold">Liam Parker</div>
-                                    <div className="text-[11px] text-[#A9ABB0]">Liamparker@gmail.com</div>
-                                </div>
-                            </div>
+                <div className="rounded-xl overflow-x-auto">
+                    <div className="min-w-[800px]">
+                        {/* Table Header */}
+                        <div className="grid grid-cols-5 gap-4 px-6 py-4 border-b border-[#E5E5EA]">
+                            <div className="text-[12px] font-medium text-[#8E8E93]">Name</div>
+                            <div className="text-[12px] font-medium text-[#8E8E93]">Version badge</div>
+                            <div className="text-[12px] font-medium text-[#8E8E93]">Status</div>
+                            <div className="text-[12px] font-medium text-[#8E8E93]">Files</div>
+                            <div className="text-[12px] font-medium text-[#8E8E93]">Uploaded by</div>
                         </div>
 
-                        {/* Delivery 02 */}
-                        <div className="grid grid-cols-5 gap-4 px-6 py-5 items-center text-[#8E8E93]">
-                            <div className="text-[15px]">Delivery_02</div>
-                            <div className="text-[14px]">v02</div>
-                            <div>
-                                <span className={`bg-[#F2F2F7] text-[#8E8E93] text-[12px] px-4 py-1.5 rounded-full font-medium inline-block min-w-[100px] text-center ${isProjectFinished ? 'opacity-60' : ''}`}>Changes requested</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <div className="relative w-8 h-8 opacity-80" style={{ filter: 'hue-rotate(320deg) saturate(3)' }}>
-                                    <Image src="/Document file icon.svg" alt="file" width={32} height={32} />
+                        {/* Table Rows */}
+                        <div className="divide-y divide-[#E5E5EA]/50">
+                            {/* Delivery 03 */}
+                            <div className="grid grid-cols-5 gap-4 px-6 py-5 items-center bg-[#F7FAFF]">
+                                <div className="flex items-center gap-2">
+                                    <span className="text-[15px] font-medium text-[#111111]">Delivery_03</span>
+                                    <span className="bg-[#EBF3FF] text-[#1D61F2] text-[10px] px-2 py-0.5 rounded-full font-medium">Latest</span>
                                 </div>
+                                <div className="text-[14px] text-[#2C2C2E] font-medium">v03</div>
                                 <div>
-                                    <div className="text-[14px] font-medium">image.png</div>
-                                    <div className="text-[11px]">3.3 MB</div>
+                                    {isProjectFinished ? (
+                                        <span className="bg-[#F2F2F7] text-[#8E8E93] text-[12px] px-4 py-1.5 rounded-full font-medium inline-block min-w-[100px] text-center opacity-60">Approved</span>
+                                    ) : delivery03Status === "Pending" ? (
+                                        <button
+                                            onClick={() => setIsSubmitModalOpen(true)}
+                                            className="bg-[#FFF9F2] text-[#FF9500] text-[12px] px-4 py-1.5 rounded-full font-medium inline-block min-w-[100px] text-center hover:bg-[#FFF2E0] transition-colors"
+                                        >
+                                            Pending
+                                        </button>
+                                    ) : (
+                                        <span className="bg-[#E8F5E9] text-[#34C759] text-[12px] px-4 py-1.5 rounded-full font-medium inline-block min-w-[100px] text-center">Approved</span>
+                                    )}
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="relative w-8 h-8">
+                                        <Image src="/Document file icon.svg" alt="file" width={32} height={32} />
+                                    </div>
+                                    <div>
+                                        <div className="text-[14px] text-[#111111] font-medium">image.png</div>
+                                        <div className="text-[11px] text-[#8E8E93]">3.3 MB</div>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="relative w-9 h-9 rounded-xl overflow-hidden shadow-sm">
+                                        <Image src="/right-column.png" alt="user" fill className="object-cover" />
+                                    </div>
+                                    <div>
+                                        <div className="text-[13px] text-[#111111] font-semibold">Liam Parker</div>
+                                        <div className="text-[11px] text-[#A9ABB0]">Liamparker@gmail.com</div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <div className="relative w-9 h-9 rounded-xl overflow-hidden opacity-80">
-                                    <Image src="/right-column.png" alt="user" fill className="object-cover" />
-                                </div>
-                                <div>
-                                    <div className="text-[13px] font-semibold">Liam Parker</div>
-                                    <div className="text-[11px]">Liamparker@gmail.com</div>
-                                </div>
-                            </div>
-                        </div>
 
-                        {/* Delivery 01 */}
-                        <div className="grid grid-cols-5 gap-4 px-6 py-5 items-center text-[#8E8E93]">
-                            <div className="text-[15px]">Delivery_01</div>
-                            <div className="text-[14px]">v01</div>
-                            <div>
-                                {isProjectFinished ? (
-                                    <span className="bg-[#F2F2F7] text-[#8E8E93] text-[12px] px-4 py-1.5 rounded-full font-medium inline-block min-w-[100px] text-center opacity-60">Changes requested</span>
-                                ) : delivery01Status === "Approved" ? (
-                                    <button
-                                        onClick={() => setIsViewRequestedChangesModalOpen(true)}
-                                        className="bg-[#E8F5E9] text-[#34C759] text-[12px] px-4 py-1.5 rounded-full font-medium inline-block min-w-[100px] text-center hover:bg-[#DCF5E1] transition-colors"
-                                    >
-                                        Approved
-                                    </button>
-                                ) : (
-                                    <span className="bg-[#F2F2F7] text-[#8E8E93] text-[12px] px-4 py-1.5 rounded-full font-medium inline-block min-w-[100px] text-center">Changes requested</span>
-                                )}
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <div className="relative w-8 h-8 opacity-80">
-                                    <Image src="/Document file icon.svg" alt="file" width={32} height={32} />
-                                </div>
+                            {/* Delivery 02 */}
+                            <div className="grid grid-cols-5 gap-4 px-6 py-5 items-center text-[#8E8E93]">
+                                <div className="text-[15px]">Delivery_02</div>
+                                <div className="text-[14px]">v02</div>
                                 <div>
-                                    <div className="text-[14px] font-medium">image.png</div>
-                                    <div className="text-[11px]">3.3 MB</div>
+                                    <span className={`bg-[#F2F2F7] text-[#8E8E93] text-[12px] px-4 py-1.5 rounded-full font-medium inline-block min-w-[100px] text-center ${isProjectFinished ? 'opacity-60' : ''}`}>Changes requested</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="relative w-8 h-8 opacity-80" style={{ filter: 'hue-rotate(320deg) saturate(3)' }}>
+                                        <Image src="/Document file icon.svg" alt="file" width={32} height={32} />
+                                    </div>
+                                    <div>
+                                        <div className="text-[14px] font-medium">image.png</div>
+                                        <div className="text-[11px]">3.3 MB</div>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="relative w-9 h-9 rounded-xl overflow-hidden opacity-80">
+                                        <Image src="/right-column.png" alt="user" fill className="object-cover" />
+                                    </div>
+                                    <div>
+                                        <div className="text-[13px] font-semibold">Liam Parker</div>
+                                        <div className="text-[11px]">Liamparker@gmail.com</div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <div className="relative w-9 h-9 rounded-xl overflow-hidden opacity-80">
-                                    <Image src="/right-column.png" alt="user" fill className="object-cover" />
-                                </div>
+
+                            {/* Delivery 01 */}
+                            <div className="grid grid-cols-5 gap-4 px-6 py-5 items-center text-[#8E8E93]">
+                                <div className="text-[15px]">Delivery_01</div>
+                                <div className="text-[14px]">v01</div>
                                 <div>
-                                    <div className="text-[13px] font-semibold">Liam Parker</div>
-                                    <div className="text-[11px]">Liamparker@gmail.com</div>
+                                    {isProjectFinished ? (
+                                        <span className="bg-[#F2F2F7] text-[#8E8E93] text-[12px] px-4 py-1.5 rounded-full font-medium inline-block min-w-[100px] text-center opacity-60">Changes requested</span>
+                                    ) : delivery01Status === "Approved" ? (
+                                        <button
+                                            onClick={() => setIsViewRequestedChangesModalOpen(true)}
+                                            className="bg-[#E8F5E9] text-[#34C759] text-[12px] px-4 py-1.5 rounded-full font-medium inline-block min-w-[100px] text-center hover:bg-[#DCF5E1] transition-colors"
+                                        >
+                                            Approved
+                                        </button>
+                                    ) : (
+                                        <span className="bg-[#F2F2F7] text-[#8E8E93] text-[12px] px-4 py-1.5 rounded-full font-medium inline-block min-w-[100px] text-center">Changes requested</span>
+                                    )}
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="relative w-8 h-8 opacity-80">
+                                        <Image src="/Document file icon.svg" alt="file" width={32} height={32} />
+                                    </div>
+                                    <div>
+                                        <div className="text-[14px] font-medium">image.png</div>
+                                        <div className="text-[11px]">3.3 MB</div>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="relative w-9 h-9 rounded-xl overflow-hidden opacity-80">
+                                        <Image src="/right-column.png" alt="user" fill className="object-cover" />
+                                    </div>
+                                    <div>
+                                        <div className="text-[13px] font-semibold">Liam Parker</div>
+                                        <div className="text-[11px]">Liamparker@gmail.com</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -297,8 +302,8 @@ export default function DeliveryContent({ onNotificationClick, onProfileClick }:
 
             {/* Submit Delivery Modal Overlay */}
             {isSubmitModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[2px]">
-                    <div className="bg-white w-[560px] rounded-[24px] overflow-hidden shadow-2xl p-8">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[2px] p-4">
+                    <div className="bg-white w-full max-w-[560px] max-h-[90vh] overflow-y-auto rounded-[20px] lg:rounded-[24px] shadow-2xl p-6 lg:p-8">
                         <h2 className="text-[20px] font-semibold text-[#111111] mb-8">Submit Delivery</h2>
 
                         <div className="space-y-6">
@@ -363,8 +368,8 @@ export default function DeliveryContent({ onNotificationClick, onProfileClick }:
 
             {/* Delivery Approval Modal Overlay */}
             {isApprovalModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[2px]">
-                    <div className="bg-white w-[600px] rounded-[32px] overflow-hidden shadow-2xl p-10">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[2px] p-4">
+                    <div className="bg-white w-full max-w-[600px] max-h-[90vh] overflow-y-auto rounded-[24px] lg:rounded-[32px] shadow-2xl p-6 lg:p-10">
                         <h2 className="text-[24px] font-bold text-[#111111] mb-8">Delivery 03</h2>
 
                         <div className="space-y-8">
@@ -432,8 +437,8 @@ export default function DeliveryContent({ onNotificationClick, onProfileClick }:
 
             {/* Request Changes Modal Overlay */}
             {isRequestChangesModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[2px]">
-                    <div className="bg-white w-[560px] rounded-[32px] overflow-hidden shadow-2xl p-10 relative">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[2px] p-4">
+                    <div className="bg-white w-full max-w-[560px] max-h-[90vh] overflow-y-auto rounded-[24px] lg:rounded-[32px] shadow-2xl p-6 lg:p-10 relative">
                         <button
                             onClick={() => setIsRequestChangesModalOpen(false)}
                             className="absolute top-8 right-8 text-[#111111] hover:opacity-60 transition-opacity"
@@ -492,8 +497,8 @@ export default function DeliveryContent({ onNotificationClick, onProfileClick }:
             )}
             {/* View Requested Changes Modal Overlay */}
             {isViewRequestedChangesModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[2px]">
-                    <div className="bg-white w-[560px] rounded-[32px] overflow-hidden shadow-2xl p-10 relative">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[2px] p-4">
+                    <div className="bg-white w-full max-w-[560px] max-h-[90vh] overflow-y-auto rounded-[24px] lg:rounded-[32px] shadow-2xl p-6 lg:p-10 relative">
                         <button
                             onClick={() => setIsViewRequestedChangesModalOpen(false)}
                             className="absolute top-8 right-8 text-[#111111] hover:opacity-60 transition-opacity"
@@ -524,8 +529,8 @@ export default function DeliveryContent({ onNotificationClick, onProfileClick }:
             )}
             {/* Can't Mark as Completed Modal Overlay */}
             {isCantMarkModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[2px]">
-                    <div className="bg-white w-[500px] rounded-[32px] overflow-hidden shadow-2xl p-10 flex flex-col items-center">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[2px] p-4">
+                    <div className="bg-white w-full max-w-[500px] max-h-[90vh] overflow-y-auto rounded-[24px] lg:rounded-[32px] shadow-2xl p-6 lg:p-10 flex flex-col items-center">
                         <div className="relative w-40 h-40 mb-6">
                             <Image
                                 src="/state icon (3).png"
@@ -552,8 +557,8 @@ export default function DeliveryContent({ onNotificationClick, onProfileClick }:
 
             {/* Can't Mark as Completed Modal Overlay */}
             {isCantMarkModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[2px]">
-                    <div className="bg-white w-[500px] rounded-[32px] overflow-hidden shadow-2xl p-10 flex flex-col items-center">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[2px] p-4">
+                    <div className="bg-white w-full max-w-[500px] max-h-[90vh] overflow-y-auto rounded-[24px] lg:rounded-[32px] shadow-2xl p-6 lg:p-10 flex flex-col items-center">
                         <div className="relative w-40 h-40 mb-6">
                             <Image
                                 src="/state icon (3).png"

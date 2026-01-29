@@ -16,13 +16,13 @@ export default function FreelancerSignupPage() {
     const router = useRouter()
 
     return (
-        <div className="flex h-screen bg-white overflow-hidden">
+        <div className="flex min-h-screen lg:h-screen bg-white overflow-y-auto lg:overflow-hidden">
             {/* Left Column - Form */}
-            <div className="flex w-full flex-col p-8 lg:w-1/2 lg:p-16 xl:p-24 xl:pr-10 2xl:px-40 transition-all duration-300">
+            <div className="flex w-full flex-col p-6 md:p-12 lg:w-1/2 lg:p-16 xl:p-24 xl:pr-10 2xl:px-40 transition-all duration-300">
                 {/* Content Section */}
-                <div className="ml-auto w-full max-w-[480px]">
+                <div className="mx-auto lg:ml-auto lg:mr-0 w-full max-w-[480px] py-10 lg:py-0">
                     {/* Logo Section & Back Button */}
-                    <div className="mb-16 flex items-center justify-between">
+                    <div className="mb-10 lg:mb-16 flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             {step === "verify" && (
                                 <button
@@ -96,11 +96,11 @@ function SignupForm({ email, setEmail, onContinue }: { email: string; setEmail: 
 
     return (
         <div className="animate-in fade-in slide-in-from-left-4 duration-500">
-            <div className="mb-10 space-y-3">
-                <h1 className="text-[32px] font-bold tracking-tight text-[#1D1D1F]">
+            <div className="mb-6 lg:mb-10 space-y-2 lg:space-y-3">
+                <h1 className="text-[26px] md:text-[32px] font-bold tracking-tight text-[#1D1D1F]">
                     Welcome to <span className="text-[#0C6FFF]">Projio</span>
                 </h1>
-                <p className="text-[15px] text-[#86868B]">Please enter your email address to create an account.</p>
+                <p className="text-[13px] md:text-[15px] text-[#86868B]">Please enter your email address to create an account.</p>
             </div>
 
             <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); onContinue(); }}>
@@ -162,7 +162,7 @@ function SignupForm({ email, setEmail, onContinue }: { email: string; setEmail: 
                 </Button>
             </form>
 
-            <p className="mt-12 text-center text-sm font-medium text-[#1D1D1F]">
+            <p className="mt-8 lg:mt-12 text-center text-[13px] md:text-sm font-medium text-[#1D1D1F]">
                 Already have an account?{" "}
                 <Link href="/auth/login" className="text-[#0C6FFF] hover:underline cursor-pointer">
                     Sign in
@@ -217,10 +217,10 @@ function SignupVerificationForm({ email, onSuccess }: { email: string; onSuccess
 
     return (
         <div className="animate-in fade-in slide-in-from-right-4 duration-500">
-            <div className="mb-10 space-y-3">
-                <h1 className="text-[32px] font-bold tracking-tight text-[#1D1D1F]">Check your inbox.</h1>
-                <p className="text-[14px] text-[#5E5E5E] leading-relaxed">
-                    We've sent a 6-digit confirmation code to your email. Please <br />enter the code in the box below to verify your account creation<br /> request.
+            <div className="mb-6 lg:mb-10 space-y-2 lg:space-y-3">
+                <h1 className="text-[26px] md:text-[32px] font-bold tracking-tight text-[#1D1D1F]">Check your inbox.</h1>
+                <p className="text-[13px] md:text-[14px] text-[#5E5E5E] leading-relaxed">
+                    We've sent a 6-digit confirmation code to your email. Please <br className="hidden md:block" />enter the code in the box below to verify your account creation<br className="hidden md:block" /> request.
                 </p>
             </div>
 
@@ -230,9 +230,9 @@ function SignupVerificationForm({ email, onSuccess }: { email: string; onSuccess
             </div>
 
             <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
-                <div className="flex gap-4">
+                <div className="flex gap-2 md:gap-4">
                     {otp.map((digit, i) => (
-                        <div key={i} className="relative h-48 flex-1">
+                        <div key={i} className="relative h-32 md:h-48 flex-1">
                             <input
                                 id={`otp - ${i} `}
                                 type="text"
@@ -281,21 +281,22 @@ function InfoStepForm({ onNext }: { onNext: () => void }) {
     return (
         <div className="animate-in fade-in slide-in-from-right-4 duration-500">
             {/* Stepper */}
-            <div className="flex items-center gap-5 mt-35 mb-12">
+            <div className="flex items-center gap-4 md:gap-5 mt-6 md:mt-12 lg:mt-24 mb-6 md:mb-12">
                 <div className="flex items-center gap-3">
-                    <div className="w-[34px] h-[34px] bg-[#EEF4FF] rounded-full flex items-center justify-center">
-                        <span className="text-[14px] font-bold text-[#0C6FFF]">1</span>
+                    <div className="w-[30px] h-[30px] md:w-[34px] md:h-[34px] bg-[#EEF4FF] rounded-full flex items-center justify-center">
+                        <span className="text-[12px] md:text-[14px] font-bold text-[#0C6FFF]">1</span>
                     </div>
-                    <span className="text-[14px] font-semibold text-[#1D1D1F]">Info</span>
+                    <span className="text-[13px] md:text-[14px] font-semibold text-[#1D1D1F]">Info</span>
                 </div>
-                <div className="w-[34px] h-[34px] bg-[#F2F2F2] rounded-full flex items-center justify-center">
-                    <span className="text-[14px] font-medium text-[#8E8E93]">2</span>
+                <div className="w-10 h-[1px] bg-[#F2F2F2] md:hidden" />
+                <div className="w-[30px] h-[30px] md:w-[34px] md:h-[34px] bg-[#F2F2F2] rounded-full flex items-center justify-center">
+                    <span className="text-[12px] md:text-[14px] font-medium text-[#8E8E93]">2</span>
                 </div>
             </div>
 
-            <div className="mb-10 space-y-3">
-                <h1 className="text-[32px] font-bold tracking-tight text-[#1D1D1F]">Let's get start!</h1>
-                <p className="text-[15px] text-[#86868B] leading-relaxed">
+            <div className="mb-6 lg:mb-10 space-y-2 lg:space-y-3">
+                <h1 className="text-[26px] md:text-[32px] font-bold tracking-tight text-[#1D1D1F]">Let's get start!</h1>
+                <p className="text-[14px] md:text-[15px] text-[#86868B] leading-relaxed">
                     Answer a few quick questions so we can personalize your Orbittask experience.
                 </p>
             </div>
@@ -346,27 +347,28 @@ function AlmostThereStepForm({ onNext }: { onNext: () => void }) {
     return (
         <div className="animate-in fade-in slide-in-from-right-4 duration-500">
             {/* Stepper */}
-            <div className="flex items-center mt-35 gap-12 mb-12">
-                <div className="w-[34px] h-[34px] bg-[#F2F2F2] rounded-full flex items-center justify-center">
-                    <span className="text-[14px] font-bold text-[#8E8E93]">1</span>
+            <div className="flex items-center mt-6 md:mt-12 lg:mt-24 gap-4 md:gap-5 mb-6 md:mb-12">
+                <div className="w-[30px] h-[30px] md:w-[34px] md:h-[34px] bg-[#F2F2F2] rounded-full flex items-center justify-center">
+                    <span className="text-[12px] md:text-[14px] font-bold text-[#8E8E93]">1</span>
                 </div>
+                <div className="w-10 h-[1px] bg-[#F2F2F2] md:hidden" />
                 <div className="flex items-center gap-3">
-                    <div className="w-[34px] h-[34px] bg-[#EEF4FF] rounded-full flex items-center justify-center">
-                        <span className="text-[14px] font-bold text-[#0C6FFF]">2</span>
+                    <div className="w-[30px] h-[30px] md:w-[34px] md:h-[34px] bg-[#EEF4FF] rounded-full flex items-center justify-center">
+                        <span className="text-[12px] md:text-[14px] font-bold text-[#0C6FFF]">2</span>
                     </div>
-                    <span className="text-[14px] font-semibold text-[#1D1D1F]">Info</span>
+                    <span className="text-[13px] md:text-[14px] font-semibold text-[#1D1D1F]">Info</span>
                 </div>
             </div>
 
-            <div className="mb-10 space-y-3">
-                <h1 className="text-[32px] font-bold tracking-tight text-[#1D1D1F]">Almost there</h1>
-                <p className="text-[15px] text-[#86868B] leading-relaxed max-w-[400px]">
+            <div className="mb-6 lg:mb-10 space-y-2 lg:space-y-3">
+                <h1 className="text-[26px] md:text-[32px] font-bold tracking-tight text-[#1D1D1F]">Almost there</h1>
+                <p className="text-[13px] md:text-[15px] text-[#86868B] leading-relaxed max-w-[400px]">
                     Just one more step to finishing your profile set up and getting started.
                 </p>
             </div>
 
-            <div className="flex flex-col items-center mb-10">
-                <div className="relative mb-6">
+            <div className="flex flex-col items-center mb-6 lg:mb-10">
+                <div className="relative mb-4 md:mb-6">
                     <input
                         type="file"
                         ref={fileInputRef}
@@ -376,7 +378,7 @@ function AlmostThereStepForm({ onNext }: { onNext: () => void }) {
                     />
                     <div
                         onClick={handleCircleClick}
-                        className="h-[128px] w-[128px] rounded-full bg-[#F5F8FF] flex items-center justify-center cursor-pointer hover:bg-[#EEF3FF] transition-all overflow-hidden border-none group relative"
+                        className="h-[100px] w-[100px] md:h-[128px] md:w-[128px] rounded-full bg-[#F5F8FF] flex items-center justify-center cursor-pointer hover:bg-[#EEF3FF] transition-all overflow-hidden border-none group relative"
                     >
                         {selectedImage ? (
                             <Image
@@ -386,7 +388,7 @@ function AlmostThereStepForm({ onNext }: { onNext: () => void }) {
                                 className="object-cover"
                             />
                         ) : (
-                            <div className="relative w-10 h-10 transition-transform group-hover:scale-110">
+                            <div className="relative w-8 h-8 md:w-10 md:h-10 transition-transform group-hover:scale-110">
                                 <Image
                                     src="/Upload Icon.svg"
                                     alt="Upload"
@@ -397,14 +399,14 @@ function AlmostThereStepForm({ onNext }: { onNext: () => void }) {
                         )}
                     </div>
                 </div>
-                <span className="text-[20px] font-semibold text-[#1D1D1F]">You</span>
+                <span className="text-[18px] md:text-[20px] font-semibold text-[#1D1D1F]">You</span>
             </div>
 
-            <div className="flex items-center gap-2 mb-12 justify-center opacity-60">
+            <div className="flex items-center gap-2 mb-8 md:mb-12 justify-center opacity-70">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#86868B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" />
                 </svg>
-                <p className="text-[11px] text-[#86868B]">Upload a picture you want to set as your profile.</p>
+                <p className="text-[10px] md:text-[11px] text-[#86868B]">Upload a picture you want to set as your profile.</p>
             </div>
 
             <form onSubmit={(e) => {

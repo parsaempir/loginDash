@@ -90,7 +90,7 @@ export default function RequirementsPage() {
     return (
         <div className="min-h-screen bg-white flex flex-col items-center relative">
             {/* Branded Header */}
-            <div className="w-full h-[140px] relative flex items-center px-12 overflow-hidden bg-[#FBFBFB]">
+            <div className="w-full h-[100px] md:h-[140px] relative flex items-center px-6 md:px-12 overflow-hidden bg-[#FBFBFB]">
                 <Image
                     src="/Frame 2147228857.png"
                     alt="Background Pattern"
@@ -110,7 +110,7 @@ export default function RequirementsPage() {
             </div>
 
             {/* Progress Stepper */}
-            <div className="flex items-center justify-center gap-8 mt-12 mb-16 px-6">
+            <div className="flex items-center justify-center gap-4 md:gap-8 mt-8 mb-10 md:mt-12 md:mb-16 px-6">
                 <div className="flex flex-col items-center gap-2 relative">
                     <div className={cn(
                         "h-9 w-9 rounded-full flex items-center justify-center text-[15px] font-medium transition-all duration-300",
@@ -132,10 +132,10 @@ export default function RequirementsPage() {
             </div>
 
             {/* Main Content Area */}
-            <div className="w-full max-w-[640px] px-8 pb-24 flex flex-col">
+            <div className="w-full max-w-[640px] px-6 md:px-8 pb-24 flex flex-col">
                 <div className="space-y-12">
                     {/* Header Text */}
-                    <h1 className="text-[36px] font-bold tracking-tight text-[#1D1D1F]">Add Project Requirements</h1>
+                    <h1 className="text-[28px] md:text-[36px] font-bold tracking-tight text-[#1D1D1F]">Add Project Requirements</h1>
 
                     <form onSubmit={handleNext} className="space-y-10">
                         {subStep === 1 && (
@@ -155,7 +155,7 @@ export default function RequirementsPage() {
                                         onChange={(e) => updateField("goals", e.target.value)}
                                         placeholder="Type here.."
                                         className={cn(
-                                            "w-full min-h-[160px] p-6 rounded-xl border bg-white outline-none transition-all resize-none text-[16px] leading-relaxed placeholder:text-[#86868B]/40",
+                                            "w-full min-h-[120px] md:min-h-[160px] p-4 md:p-6 rounded-xl border bg-white outline-none transition-all resize-none text-[16px] leading-relaxed placeholder:text-[#86868B]/40",
                                             errors.goals ? "border-red-500 ring-1 ring-red-500" : "border-[#C7C7CC] focus:border-[#0C6FFF] focus:ring-1 focus:ring-[#0C6FFF]"
                                         )}
                                     />
@@ -183,7 +183,7 @@ export default function RequirementsPage() {
                                         onChange={(e) => updateField("scope", e.target.value)}
                                         placeholder="Type here.."
                                         className={cn(
-                                            "w-full min-h-[160px] p-6 rounded-xl border bg-white outline-none transition-all resize-none text-[16px] leading-relaxed placeholder:text-[#86868B]/40",
+                                            "w-full min-h-[120px] md:min-h-[160px] p-4 md:p-6 rounded-xl border bg-white outline-none transition-all resize-none text-[16px] leading-relaxed placeholder:text-[#86868B]/40",
                                             errors.scope ? "border-red-500 ring-1 ring-red-500" : "border-[#C7C7CC] focus:border-[#0C6FFF] focus:ring-1 focus:ring-[#0C6FFF]"
                                         )}
                                     />
@@ -211,7 +211,7 @@ export default function RequirementsPage() {
                                         onChange={(e) => updateField("criteria", e.target.value)}
                                         placeholder="Type here.."
                                         className={cn(
-                                            "w-full min-h-[160px] p-6 rounded-xl border bg-white outline-none transition-all resize-none text-[16px] leading-relaxed placeholder:text-[#86868B]/40",
+                                            "w-full min-h-[120px] md:min-h-[160px] p-4 md:p-6 rounded-xl border bg-white outline-none transition-all resize-none text-[16px] leading-relaxed placeholder:text-[#86868B]/40",
                                             errors.criteria ? "border-red-500 ring-1 ring-red-500" : "border-[#C7C7CC] focus:border-[#0C6FFF] focus:ring-1 focus:ring-[#0C6FFF]"
                                         )}
                                     />
@@ -240,7 +240,7 @@ export default function RequirementsPage() {
                                     />
                                     <div
                                         onClick={() => fileInputRef.current?.click()}
-                                        className="w-full min-h-[160px] border-2 border-dashed border-[#C7C7CC] rounded-xl flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-all gap-2 group"
+                                        className="w-full min-h-[120px] md:min-h-[160px] border-2 border-dashed border-[#C7C7CC] rounded-xl flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-all gap-2 group"
                                     >
                                         <div className="text-[15px] text-[#86868B] font-medium flex items-center gap-1 group-hover:text-[#1D1D1F]">
                                             <span className="text-[18px]">+</span> Click here to upload
@@ -318,11 +318,11 @@ export default function RequirementsPage() {
                     <div className="relative w-full max-w-[640px] bg-white rounded-[24px] p-10 shadow-2xl animate-in zoom-in-95 fade-in duration-300">
                         <div className="space-y-6">
                             <div className="space-y-4">
-                                <h2 className="text-[28px] font-bold text-[#1D1D1F] tracking-tight">
+                                <h2 className="text-[24px] md:text-[28px] font-bold text-[#1D1D1F] tracking-tight">
                                     Submit Requirements?
                                 </h2>
-                                <p className="text-[17px] text-[#424245] leading-relaxed">
-                                    Once submitted, you won't be able to edit this form again<br />
+                                <p className="text-[15px] md:text-[17px] text-[#424245] leading-relaxed">
+                                    Once submitted, you won't be able to edit this form again<br className="hidden md:block" />
                                     Please review your information before sending.
                                 </p>
                             </div>
@@ -364,11 +364,11 @@ export default function RequirementsPage() {
                             </div>
 
                             <div className="space-y-4">
-                                <h2 className="text-[32px] font-bold text-[#1D1D1F] tracking-tight">
+                                <h2 className="text-[28px] md:text-[32px] font-bold text-[#1D1D1F] tracking-tight">
                                     Requirements Submitted!
                                 </h2>
-                                <p className="text-[17px] text-[#424245] leading-relaxed max-w-[320px] mx-auto">
-                                    These requirements are now locked.<br />
+                                <p className="text-[15px] md:text-[17px] text-[#424245] leading-relaxed max-w-[320px] mx-auto">
+                                    These requirements are now locked.<br className="hidden md:block" />
                                     Continue to see proposal
                                 </p>
                             </div>

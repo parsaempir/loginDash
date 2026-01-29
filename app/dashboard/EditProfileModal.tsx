@@ -45,7 +45,7 @@ export default function EditProfileModal({
                 <div className="h-[100px] relative" style={{
                     backgroundImage: "url('/Frame 2147228857 (1).png')",
                     backgroundSize: "cover",
-                    backgroundPosition: "center"
+                    backgroundPosition: "top center"
                 }}>
                     <button
                         onClick={onClose}
@@ -66,6 +66,8 @@ export default function EditProfileModal({
                                 className="object-cover"
                             />
                         </div>
+                        {/* Status Dot */}
+                        <div className="absolute top-0 right-0 w-[22px] h-[22px] bg-[#0C6FFF] border-[3px] border-white rounded-full z-20"></div>
                         {/* Edit Icon Overlay using Container.svg */}
                         <div className="absolute bottom-0 right-0 w-8 h-8 bg-[#1C1C1E] border-2 border-white rounded-[9px] flex items-center justify-center cursor-pointer hover:bg-black transition-colors overflow-hidden">
                             <Image src="/Container.svg" alt="edit" width={32} height={32} className="scale-125" />

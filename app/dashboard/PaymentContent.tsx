@@ -19,9 +19,9 @@ export default function PaymentContent({ onNotificationClick, onProfileClick }: 
     const [note, setNote] = useState("");
 
     return (
-        <div className="flex-1 overflow-y-auto pr-4 relative">
+        <div className="flex-1 overflow-y-auto px-4 lg:px-0 lg:pr-4 pt-8 relative">
             {/* Top bar with background */}
-            <div className="flex items-center justify-between mb-8 relative rounded-2xl overflow-hidden px-6 py-6" style={{
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 relative rounded-2xl overflow-hidden px-4 sm:px-6 py-5 sm:py-6 gap-4 sm:gap-0" style={{
                 backgroundImage: "url('/Frame 2147228857 (1).png')",
                 backgroundSize: "cover",
                 backgroundPosition: "center"
@@ -37,18 +37,21 @@ export default function PaymentContent({ onNotificationClick, onProfileClick }: 
                 </div>
 
                 <div className="flex items-center gap-4 relative z-10">
-                    <button
-                        onClick={onProfileClick}
-                        className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA] cursor-pointer"
-                    >
-                        <Image
-                            src="/right-column.png"
-                            alt="User avatar"
-                            fill
-                            sizes="36px"
-                            className="object-cover"
-                        />
-                    </button>
+                    <div className="relative">
+                        <button
+                            onClick={onProfileClick}
+                            className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E5E5EA] cursor-pointer"
+                        >
+                            <Image
+                                src="/right-column.png"
+                                alt="User avatar"
+                                fill
+                                sizes="36px"
+                                className="object-cover"
+                            />
+                        </button>
+                        <div className="absolute top-0 right-0 w-[11px] h-[11px] bg-[#0C6FFF] border-2 border-white rounded-full z-20"></div>
+                    </div>
                     <button
                         onClick={onNotificationClick}
                         className="cursor-pointer hover:opacity-70 transition-opacity"
@@ -71,40 +74,42 @@ export default function PaymentContent({ onNotificationClick, onProfileClick }: 
 
             {hasPayments ? (
                 /* Payment List Table */
-                <div className="mt-8">
-                    {/* Table Header */}
-                    <div className="grid grid-cols-[1.5fr_1fr_1fr] gap-4 px-6 py-4 border-b border-[#E5E5EA]">
-                        <div className="text-[14px] font-medium text-[black]">Name</div>
-                        <div className="text-[14px] font-medium text-[black]">Version badge</div>
-                        <div className="text-[14px] font-medium text-[black] text-right pr-4">Status</div>
-                    </div>
-
-                    {/* Table Rows */}
-                    <div className="divide-y divide-[#E5E5EA]/50">
-                        {/* Payment 03 */}
-                        <div className="grid grid-cols-[1.5fr_1fr_1fr] gap-4 px-6 py-5 items-center">
-                            <div className="text-[15px] text-[#111111] font-medium">Payment 03</div>
-                            <div className="text-[14px] text-[#2C2C2E] font-medium">v03</div>
-                            <div className="flex justify-end pr-4">
-                                <span className="bg-[#FFF9F2] text-[#FF9500] text-[10px] px-4 py-1.5 rounded-full font-bold min-w-[80px] text-center">Issued</span>
-                            </div>
+                <div className="mt-8 overflow-x-auto">
+                    <div className="min-w-[500px]">
+                        {/* Table Header */}
+                        <div className="grid grid-cols-[1.5fr_1fr_1fr] gap-4 px-6 py-4 border-b border-[#E5E5EA]">
+                            <div className="text-[14px] font-medium text-[black]">Name</div>
+                            <div className="text-[14px] font-medium text-[black]">Version badge</div>
+                            <div className="text-[14px] font-medium text-[black] text-right pr-4">Status</div>
                         </div>
 
-                        {/* Payment 02 */}
-                        <div className="grid grid-cols-[1.5fr_1fr_1fr] gap-4 px-6 py-5 items-center bg-[#F9F9F9]/30">
-                            <div className="text-[15px] text-[#111111] font-medium">Payment 02</div>
-                            <div className="text-[14px] text-[#2C2C2E] font-medium">v02</div>
-                            <div className="flex justify-end pr-4">
-                                <span className="bg-[#F2F2F7] text-[#8E8E93] text-[10px] px-4 py-1.5 rounded-full font-bold min-w-[80px] text-center">Confirmed</span>
+                        {/* Table Rows */}
+                        <div className="divide-y divide-[#E5E5EA]/50">
+                            {/* Payment 03 */}
+                            <div className="grid grid-cols-[1.5fr_1fr_1fr] gap-4 px-6 py-5 items-center">
+                                <div className="text-[15px] text-[#111111] font-medium">Payment 03</div>
+                                <div className="text-[14px] text-[#2C2C2E] font-medium">v03</div>
+                                <div className="flex justify-end pr-4">
+                                    <span className="bg-[#FFF9F2] text-[#FF9500] text-[10px] px-4 py-1.5 rounded-full font-bold min-w-[80px] text-center">Issued</span>
+                                </div>
                             </div>
-                        </div>
 
-                        {/* Payment 01 */}
-                        <div className="grid grid-cols-[1.5fr_1fr_1fr] gap-4 px-6 py-5 items-center">
-                            <div className="text-[15px] text-[#111111] font-medium">Payment 01</div>
-                            <div className="text-[14px] text-[#2C2C2E] font-medium">v01</div>
-                            <div className="flex justify-end pr-4">
-                                <span className="bg-[#EBFAF2] text-[#34C759] text-[10px] px-4 py-1.5 rounded-full font-bold min-w-[80px] text-center">Paid</span>
+                            {/* Payment 02 */}
+                            <div className="grid grid-cols-[1.5fr_1fr_1fr] gap-4 px-6 py-5 items-center bg-[#F9F9F9]/30">
+                                <div className="text-[15px] text-[#111111] font-medium">Payment 02</div>
+                                <div className="text-[14px] text-[#2C2C2E] font-medium">v02</div>
+                                <div className="flex justify-end pr-4">
+                                    <span className="bg-[#F2F2F7] text-[#8E8E93] text-[10px] px-4 py-1.5 rounded-full font-bold min-w-[80px] text-center">Confirmed</span>
+                                </div>
+                            </div>
+
+                            {/* Payment 01 */}
+                            <div className="grid grid-cols-[1.5fr_1fr_1fr] gap-4 px-6 py-5 items-center">
+                                <div className="text-[15px] text-[#111111] font-medium">Payment 01</div>
+                                <div className="text-[14px] text-[#2C2C2E] font-medium">v01</div>
+                                <div className="flex justify-end pr-4">
+                                    <span className="bg-[#EBFAF2] text-[#34C759] text-[10px] px-4 py-1.5 rounded-full font-bold min-w-[80px] text-center">Paid</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -132,9 +137,9 @@ export default function PaymentContent({ onNotificationClick, onProfileClick }: 
 
             {/* Add Payment Modal Overlay */}
             {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[2px]">
-                    <div className="bg-white w-[560px] rounded-[32px] overflow-hidden shadow-2xl p-10">
-                        <h2 className="text-[28px] font-bold text-[#111111] mb-8">Add Payment</h2>
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[2px] p-4">
+                    <div className="bg-white w-full max-w-[560px] max-h-[90vh] overflow-y-auto rounded-[24px] lg:rounded-[32px] shadow-2xl p-6 lg:p-10">
+                        <h2 className="text-[24px] lg:text-[28px] font-bold text-[#111111] mb-6 lg:mb-8">Add Payment</h2>
 
                         <div className="space-y-6">
                             <div className="flex gap-4">
@@ -232,9 +237,9 @@ export default function PaymentContent({ onNotificationClick, onProfileClick }: 
 
             {/* Payment Confirmation (Mark as Paid) Modal Overlay */}
             {isPaidModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[2px]">
-                    <div className="bg-white w-[560px] rounded-[32px] overflow-hidden shadow-2xl p-10">
-                        <h2 className="text-[28px] font-bold text-[#111111] mb-8">Payment 04</h2>
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-[2px] p-4">
+                    <div className="bg-white w-full max-w-[560px] max-h-[90vh] overflow-y-auto rounded-[24px] lg:rounded-[32px] shadow-2xl p-6 lg:p-10">
+                        <h2 className="text-[24px] lg:text-[28px] font-bold text-[#111111] mb-6 lg:mb-8">Payment 04</h2>
 
                         <div className="space-y-6">
                             <div>

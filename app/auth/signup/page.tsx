@@ -16,13 +16,13 @@ export default function SignupPage() {
     const router = useRouter()
 
     return (
-        <div className="flex h-screen bg-white overflow-hidden">
+        <div className="flex min-h-screen lg:h-screen bg-white overflow-y-auto lg:overflow-hidden">
             {/* Left Column - Form */}
-            <div className={`flex w-full flex-col p-8 lg:w-1/2 transition-all duration-300 ${step === "profile" ? "lg:p-8 xl:p-12 2xl:px-20" : "lg:p-16 xl:p-24 xl:pr-10 2xl:px-40"}`}>
+            <div className={`flex w-full flex-col p-6 md:p-12 lg:w-1/2 transition-all duration-300 ${step === "profile" ? "lg:p-8 xl:p-12 2xl:px-20" : "lg:p-16 xl:p-24 xl:pr-10 2xl:px-40"}`}>
                 {/* Content Section */}
-                <div className="mx-auto lg:ml-auto lg:mr-0 w-full max-w-[480px]">
+                <div className="mx-auto lg:ml-auto lg:mr-0 w-full max-w-[480px] py-10 lg:py-0">
                     {/* Logo Section & Back Button */}
-                    <div className="mb-16 flex items-center gap-4">
+                    <div className="mb-10 lg:mb-16 flex items-center gap-4">
                         {(step === "verify" || step === "profile") && (
                             <button
                                 onClick={() => setStep(step === "profile" ? "verify" : "signup")}
@@ -83,11 +83,11 @@ export default function SignupPage() {
 function SignupForm({ email, setEmail, onContinue }: { email: string; setEmail: (e: string) => void; onContinue: () => void }) {
     return (
         <div className="animate-in fade-in slide-in-from-left-4 duration-500">
-            <div className="mb-10 space-y-3">
-                <h1 className="text-[32px] font-bold tracking-tight text-[#1D1D1F]">
+            <div className="mb-8 lg:mb-10 space-y-3">
+                <h1 className="text-[28px] md:text-[32px] font-bold tracking-tight text-[#1D1D1F]">
                     Welcome to <span className="text-[#0C6FFF]">Projio</span>
                 </h1>
-                <p className="text-[15px] text-[#86868B]">Please enter your email address to create an account.</p>
+                <p className="text-[14px] md:text-[15px] text-[#86868B]">Please enter your email address to create an account.</p>
             </div>
 
             <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); onContinue(); }}>
@@ -194,10 +194,10 @@ function SignupVerificationForm({ email, onSuccess }: { email: string; onSuccess
 
     return (
         <div className="animate-in fade-in slide-in-from-right-4 duration-500">
-            <div className="mb-10 space-y-3">
-                <h1 className="text-[32px] font-bold tracking-tight text-[#1D1D1F]">Check your inbox.</h1>
+            <div className="mb-8 lg:mb-10 space-y-3">
+                <h1 className="text-[28px] md:text-[32px] font-bold tracking-tight text-[#1D1D1F]">Check your inbox.</h1>
                 <p className="text-[14px] text-[#5E5E5E] leading-relaxed">
-                    We've sent a 6-digit confirmation code to your email. Please <br />enter the code in the box below to verify your account creation<br /> request.
+                    We've sent a 6-digit confirmation code to your email. Please <br className="hidden md:block" />enter the code in the box below to verify your account creation<br className="hidden md:block" /> request.
                 </p>
             </div>
 
@@ -207,9 +207,9 @@ function SignupVerificationForm({ email, onSuccess }: { email: string; onSuccess
             </div>
 
             <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
-                <div className="flex gap-4">
+                <div className="flex gap-2 md:gap-4">
                     {otp.map((digit, i) => (
-                        <div key={i} className="relative h-48 flex-1">
+                        <div key={i} className="relative h-32 md:h-48 flex-1">
                             <input
                                 id={`otp - ${i} `}
                                 type="text"
@@ -257,8 +257,8 @@ function SignupVerificationForm({ email, onSuccess }: { email: string; onSuccess
 function ProfileSetupForm({ onNext }: { onNext: () => void }) {
     return (
         <div className="animate-in fade-in slide-in-from-right-4 duration-500">
-            <div className="mb-10 mt-45">
-                <h1 className="text-[32px] font-bold tracking-tight text-[#1D1D1F]">Set up your profile</h1>
+            <div className="mb-8 lg:mb-10 mt-10 md:mt-20 lg:mt-45">
+                <h1 className="text-[28px] md:text-[32px] font-bold tracking-tight text-[#1D1D1F]">Set up your profile</h1>
             </div>
 
             <div className="flex flex-col items-center mb-10">

@@ -19,7 +19,7 @@ export default function ProfilePanel({ show, onClose, onEditClick }: ProfilePane
             ></div>
 
             {/* Profile Panel */}
-            <div className="absolute top-[125px] right-[80px] z-50 w-[320px] bg-white rounded-[24px] shadow-[0_30px_70px_rgba(0,0,0,0.15)] border border-[#E5E5EA] animate-in fade-in slide-in-from-top-4 duration-200">
+            <div className="absolute top-[80px] lg:top-[125px] right-4 lg:right-[80px] z-50 w-[calc(100vw-32px)] sm:w-[320px] bg-white rounded-[24px] shadow-[0_30px_70px_rgba(0,0,0,0.15)] border border-[#E5E5EA] animate-in fade-in slide-in-from-top-4 duration-200">
                 <div className="p-7 relative z-10 bg-white rounded-[24px]">
                     {/* Close Button */}
                     <button
@@ -31,13 +31,16 @@ export default function ProfilePanel({ show, onClose, onEditClick }: ProfilePane
 
                     {/* Main Profile Info */}
                     <div className="flex flex-col items-center mb-6">
-                        <div className="relative w-20 h-20 rounded-full overflow-hidden mb-4">
-                            <Image
-                                src="/right-column.png"
-                                alt="Mark Bernard"
-                                fill
-                                className="object-cover"
-                            />
+                        <div className="relative">
+                            <div className="relative w-20 h-20 rounded-full overflow-hidden mb-4">
+                                <Image
+                                    src="/right-column.png"
+                                    alt="Mark Bernard"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                            <div className="absolute top-0 right-0 w-[18px] h-[18px] bg-[#0C6FFF] border-2 border-white rounded-full z-20"></div>
                         </div>
                         <h3 className="text-[18px] font-bold text-[#111111] mb-0.5">Mark Bernard</h3>
                         <p className="text-[13px] text-[#8E8E93]">Markber004@mail.com</p>
@@ -65,8 +68,11 @@ export default function ProfilePanel({ show, onClose, onEditClick }: ProfilePane
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             </div>
                             <div className="flex items-center gap-3">
-                                <div className="relative w-10 h-10 rounded-full overflow-hidden">
-                                    <Image src="/right-column.png" alt="Avatar" fill className="object-cover" />
+                                <div className="relative">
+                                    <div className="relative w-10 h-10 rounded-full overflow-hidden">
+                                        <Image src="/right-column.png" alt="Avatar" fill className="object-cover" />
+                                    </div>
+                                    <div className="absolute top-0 right-0 w-[11px] h-[11px] bg-[#0C6FFF] border-2 border-white rounded-full z-20"></div>
                                 </div>
                                 <div className="flex flex-col">
                                     <span className="text-[15px] font-bold text-[#111111]">Mark Bernard</span>

@@ -18,7 +18,7 @@ export default function NotificationPanel({ show, onClose }: NotificationPanelPr
             ></div>
 
             {/* Notification Panel */}
-            <div className="absolute top-[135px] right-8 z-50 w-[450px] bg-white rounded-[24px] shadow-[0_30px_70px_rgba(0,0,0,0.15)] border border-[#E5E5EA] animate-in fade-in slide-in-from-top-4 duration-200">
+            <div className="absolute top-[80px] lg:top-[135px] right-4 lg:right-8 z-50 w-[calc(100vw-32px)] sm:w-[450px] bg-white rounded-[24px] shadow-[0_30px_70px_rgba(0,0,0,0.15)] border border-[#E5E5EA] animate-in fade-in slide-in-from-top-4 duration-200">
                 {/* Arrow Tail - Smaller and narrower pointed style */}
                 <div className="absolute -top-[8px] right-[24px] w-[14px] h-[14px] bg-white border-t border-l border-[#E5E5EA] rotate-45 transform"></div>
 
