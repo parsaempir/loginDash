@@ -93,7 +93,7 @@ export default function LoginPage() {
 
             {/* Right Column - Image */}
             {step !== "success" && (
-                <div className="hidden lg:block lg:flex-1 py-2 px-4  xl:pl-10 xl:pr-22 2xl:py-22 2xl:px-20">
+                <div className="hidden lg:block lg:flex-1 lg:py-20 px-4 xl:pl-10 xl:pr-22 2xl:py-22 2xl:px-20">
                     <div className="relative h-full w-full  rounded-[100px]">
                         <Image
                             src="/right-column.png"
